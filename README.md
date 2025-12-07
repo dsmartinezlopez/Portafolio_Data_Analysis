@@ -14,7 +14,7 @@ My CV in [pdf](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/
 
 ## Table of Contents
 
-- [Portfolio Projects](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects/Portafolio%20Project)
+- Portafolio Projects
 
   SQL:
 
