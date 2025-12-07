@@ -32,7 +32,8 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Results:**
     
 ### Python:
-
+  - Project 1:
+    
   **Goal:**
   
   **Description:**
@@ -57,7 +58,8 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Results:**
 
 ### Tableau:
-
+  - Project 1:
+    
   **Goal:**
   
   **Description:**
