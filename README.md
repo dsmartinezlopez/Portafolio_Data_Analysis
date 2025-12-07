@@ -14,4 +14,12 @@ My CV in [pdf](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/
 
 ## Table of Contents
 
-- [Portfolio Projects]()
+- [Portfolio Projects](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/Portafolio%20Projects)
+
+  SQL:
+
+  Python:
+
+  Power BI:
+
+  Tableau:
