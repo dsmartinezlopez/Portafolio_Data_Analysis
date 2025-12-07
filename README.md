@@ -17,22 +17,32 @@ My CV in [pdf](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/
 
 ## Portafolio Projects
 
-  SQL:
+### SQL:
   - Project 1: 
-  Goal:
-  Description:
-  Skills: 
-  Technology: 
-  Results: 
+  
+  **Goal:**
+  
+  **Description:**
+  
+  **Skills:**
+  
+  **Technology:**
+  
+  **Results:**
     
-  Python:
+### Python:
 
-  Power BI: 
+### Power BI: 
   - Project 1: [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
-  Goal:
-  Description:
-  Skills: 
-  Technology: 
-  Results: 
+    
+  **Goal:**
+  
+  **Description:**
+  
+  **Skills:**
+  
+  **Technology:**
+  
+  **Results:**
 
-  Tableau:
+### Tableau:
