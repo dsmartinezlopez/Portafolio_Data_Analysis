@@ -1,4 +1,4 @@
-## About
+# About
 
 Hi! I'm David, welcome to my Data Analytical portfolio. 
 
@@ -12,9 +12,9 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
 My CV in [pdf](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/_CV%20--%20David%20Santiago%20Mart%C3%ADnez%20L%C3%B3pez.pdf)
 
-## Table of Contents
+# Table of Contents
 
-- Portafolio Projects
+## Portafolio Projects
 
   SQL:
 
