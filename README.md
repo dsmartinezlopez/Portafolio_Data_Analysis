@@ -60,7 +60,13 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   
   **Technology:** DAX, Power Query, M.
   
-  **Results:**
+  **Results:** 
+  In comparison of the overall scores, socioeconomic stratum 6 vs the others is 47.69% above the national average.
+
+  In the overall results, distance learning students were -36.94% below the average while face-to-face students were 6.43% above, that is, a GAP of 43.37% between the two.
+
+  The overall score of students living in rural areas was 22.6% below the national average.  
+
 
 ### Tableau:
   - Project 1:
