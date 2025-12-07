@@ -47,13 +47,18 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 ### Power BI: 
   - Project 1: [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
     
-  **Goal:**
+  **Goal:** Use Data Analysis for:
   
-  **Description:**
+Identify areas for improvement in higher education to better prepare students.
+Connect the skills of future professionals with the needs of the labor market.
+Detect gaps and opportunities in different regions to reduce inequalities.
+Improve the quality of human capital, a fundamental pillar for the country's progress.
   
-  **Skills:**
+  **Description:** The Icfes Saber Pro are a standardized assessment tool in Colombia that measures the competencies of higher education students. These results are key to understanding the quality of education and guiding public policy. The results of the Saber Pro tests not only reflect academic performance, but also directly impact Colombia's productivity and competitiveness.
   
-  **Technology:**
+  **Skills:** Data Vizualization, Data Manipulation, Storytelling.
+  
+  **Technology:** DAX, Power Query, M.
   
   **Results:**
 
