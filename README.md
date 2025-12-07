@@ -10,7 +10,8 @@ This portfolio is a testament to my problem-solving approach, attention to detai
 
 Feel free to explore the projects below to see how I apply these tools to real-world business scenarios.
 
-My CV in [pdf](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/_CV%20--%20David%20Santiago%20Mart%C3%ADnez%20L%C3%B3pez.pdf)
+Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/_CV%20--%20David%20Santiago%20Mart%C3%ADnez%20L%C3%B3pez.pdf) in Spanish.
+Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/_CV%20--%20David%20Santiago%20Mart%C3%ADnez%20L%C3%B3pez.pdf) in English.
 
 
 # Table of Contents
