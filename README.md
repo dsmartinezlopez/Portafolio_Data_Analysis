@@ -71,10 +71,6 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   3. There is a correlation between variables and a dependence between place of residence and the results of the Saber Pro tests. This is a worrying issue because it creates a social gap in education, meaning that students living in rural areas are receiving a lower level of education than those living in urban centers. The government and the Ministry of Education must focus on reducing inequalities and educational gaps.
   
 
-# Education 
-
-
-
 
 # Contact
 
