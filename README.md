@@ -69,9 +69,8 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   1. It was demonstrated that there are differences in English test scores and that they are correlated with the socioeconomic status of the students, indicating a strong tendency for those with more economic resources to be better able to master the language.
   2. Statistically, a strong trend was found for engineering students to achieve better results on the Icfes Saber Pro exams compared to those who studied remotely. This suggests that the mode of study can directly influence student education and, consequently, impact Colombia's productivity; universities should focus on this.
   3. There is a correlation between variables and a dependence between place of residence and the results of the Saber Pro tests. This is a worrying issue because it creates a social gap in education, meaning that students living in rural areas are receiving a lower level of education than those living in urban centers. The government and the Ministry of Education must focus on reducing inequalities and educational gaps.
+     
   
-
-
 # Contact
 
 - LinkedIn: www.linkedin.com/in/david-santiago-martínez-lópez
