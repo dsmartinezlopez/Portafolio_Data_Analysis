@@ -20,13 +20,11 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets) database to obtain information on reviews of textile products (clothing) that are sold on [Amazon](https://www.amazon.com/?&tag=googleuscol05-20&ref=pd_sl_7d0mn8q9wb_e&adgrpid=159179349492&hvpone=&hvptwo=&hvadid=675113331081&hvpos=&hvnetw=g&hvrand=5229642513776563736&hvqmt=e&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9219397&hvtargid=kwd-10573980&hydadcr=8635_13668851&language=es_US) through sentiment analysis and product ranking.
   
-  **Description:**
+  **Description:** On one hand, the database contains information about products categorized as clothing, with a unique identifier that is the product item, as well as the brands or stores that sell it and the ratings it has received from buyers. On the other hand, regarding reviews, there is data on the country, review dates, and sentiment score.
   
   **Skills:** Data Manipulation, JOINS, aggregation functions, analytics functions, category functions, date functions, CTE query's, windows functions. 
   
   **Technology:** MS SQL Server, T-SQL
-  
-  **Results:**
 
 ### Power BI: 
   - Project 1: [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
