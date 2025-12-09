@@ -4,7 +4,7 @@ Hi! I'm David, welcome to my Data Analytical portfolio.
 
 This repository serves as a collection of projects that demonstrate my ability to transform raw data into actionable insights, supporting data-driven decision-making.
 
-I am excited to bring my technical and analytical skills to the field of data analysis as an aspiring Data/BI Analyst. I focus on the entire analytical workflow: from querying and cleaning data to building interactive dashboards and telling a compelling story with findings, all of this using SQL, Python, Power BI and Tablueau. 
+I am excited to bring my technical and analytical skills to the field of data analysis as an aspiring Data/BI Analyst. I focus on the entire analytical workflow: from querying and cleaning data to building interactive dashboards and telling a compelling story with findings, all of this using SQL, Python, Power BI and Tableau. 
 
 This portfolio is a testament to my problem-solving approach, attention to detail, and my drive to derive meaningful answers from data. 
 
@@ -52,11 +52,15 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 ### Python:
   - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
     
-  **Goal:** 
+  **Goal:** Statistically demonstrate the verification of these 3 hypotheses:
+
+  1. The higher the socioeconomic stratum, the better students perform on English test results.
+  2. In the field of engineering, students who studied in person were better prepared for employment than students who studied remotely.
+  3. Students who live in municipal capitals are better prepared for employment than students who live in rural areas.
+
+  **Description:** 
   
-  **Description:**
-  
-  **Skills:** Data Cleaning, Data Manipulation, Data Visualization.
+  **Skills:** Statistic Models, Data Cleaning, Data Manipulation, Data Visualization.
   
   **Technology:** Pandas, Numpy, Matplotlib, Seaborn, Scikit-learn.
   
