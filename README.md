@@ -52,7 +52,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   3. The overall score of students living in rural areas was 22.6% below the national average.  
 
 ### Python:
-  - Project 1:
+  - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
     
   **Goal:**
   
