@@ -58,23 +58,16 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   2. In the field of engineering, students who studied in person were better prepared for employment than students who studied remotely.
   3. Students who live in municipal capitals are better prepared for employment than students who live in rural areas.
 
-  **Description:** 
+  **Description:** For this project, given that the sample sizes of the population taking the Icfes Saber Pro tests differed for each of the hypotheses presented above, statistical analyses such as normality tests, homogeneity of variance tests, parameterization tests, and even tests tailored to the number of groups to be evaluated for each hypothesis were necessary. For the first hypothesis, the Kruskal-Wallis, Dunn's post-hoc, and Cliff's Delta tests were used. For the second hypothesis, the Welch-Satterthwaite t-test was used. Finally, for the third hypothesis, the Chi-square test was used.
   
   **Skills:** Statistic Models, Data Cleaning, Data Manipulation, Data Visualization.
   
   **Technology:** Pandas, Numpy, Matplotlib, Seaborn, Scikit-learn.
   
-  **Results:**
+  **Results:** The results found for each of the hypotheses were:
+  
+  1. It was demonstrated that there are differences in English test scores and that they are correlated with the socioeconomic status of the students, indicating a strong tendency for those with more economic resources to be better able to master the language.
+  2. Statistically, a strong trend was found for engineering students to achieve better results on the Icfes Saber Pro exams compared to those who studied remotely. This suggests that the mode of study can directly influence student education and, consequently, impact Colombia's productivity; universities should focus on this.
+  3. There is a correlation between variables and a dependence between place of residence and the results of the Saber Pro tests. This is a worrying issue because it creates a social gap in education, meaning that students living in rural areas are receiving a lower level of education than those living in urban centers. The government and the Ministry of Education must focus on reducing inequalities and educational gaps.
+  
 
-### Tableau:
-  - Project 1:
-    
-  **Goal:**
-  
-  **Description:**
-  
-  **Skills:**
-  
-  **Technology:**
-  
-  **Results:**
