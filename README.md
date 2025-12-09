@@ -13,9 +13,7 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/main/_CV%20--%20David%20Santiago%20Mart%C3%ADnez%20L%C3%B3pez.pdf) in Spanish.
 
 
-# Table of Contents
-
-## Portafolio Projects
+# Portafolio Projects
 
 ### SQL:
   - Project 1: 
@@ -42,9 +40,9 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   
   **Description:** The Icfes Saber Pro are a standardized assessment tool in Colombia that measures the competencies of higher education students. These results are key to understanding the quality of education and guiding public policy. The results of the Saber Pro tests not only reflect academic performance, but also directly impact Colombia's productivity and competitiveness.
   
-  **Skills:** Data Vizualization, Data Manipulation, Storytelling.
+  **Skills:** Data Visualization, Data Manipulation, Storytelling.
   
-  **Technology:** DAX, Power Query, M.
+  **Technology:** DAX, Power Query, Power Pivot, M.
   
   **Results:** 
   1. In comparison of the overall scores, socioeconomic stratum 6 vs the others is 47.69% above the national average.
@@ -54,13 +52,13 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 ### Python:
   - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
     
-  **Goal:**
+  **Goal:** 
   
   **Description:**
   
-  **Skills:**
+  **Skills:** Data Cleaning, Data Manipulation, Data Visualization.
   
-  **Technology:**
+  **Technology:** Pandas, Numpy, Matplotlib, Seaborn, Scikit-learn.
   
   **Results:**
 
