@@ -73,7 +73,11 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 
 # Education 
 
-- LinkedIn: [@dsmartinezlopez](www.linkedin.com/in/david-santiago-martínez-lópez)
+
+
 
 # Contact
+
+- LinkedIn: www.linkedin.com/in/david-santiago-martínez-lópez
+- Email: davidsantiagomartinez1@gmail.com
 
