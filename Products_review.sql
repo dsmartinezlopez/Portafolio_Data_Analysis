@@ -65,7 +65,46 @@ ON A.asin = B.productASIN
 --Exploración 
 
 --Preguntas:
---1. ¿Cuales fueron los meses que más compraron productos para cada uno de los países y cual fue el promedio del sentiment_score en esos meses?
+--1. ¿Cuales fueron los meses que más se revisaron productos para cada uno de los países y cual fue el promedio del sentiment_score en esos meses para cada producto?
+
+ WITH cte_1 AS(
+	SELECT 
+		CountryReview,
+		MonthReview,
+		productASIN,
+		COUNT(reviewID) AS conteo_reviews_productos,
+		AVG(COALESCE(TRY_CAST(sentiment_score AS decimal(30,2)),0)) AS sentiment_score
+	FROM Reviews
+	GROUP BY CountryReview, MonthReview, productASIN
+	HAVING COUNT(reviewID) >= 1
+),
+cte_2 AS(	
+	SELECT
+		*,
+		ROW_NUMBER() OVER(PARTITION BY CountryReview,MonthReview ORDER BY SUM(conteo_reviews_productos) DESC) AS top_productos_del_mes
+	FROM cte_1
+	GROUP BY CountryReview,MonthReview,productASIN,conteo_reviews_productos,sentiment_score
+),
+cte_3 AS(	
+	SELECT 
+		CountryReview,
+		MonthReview,
+		productASIN,
+		conteo_reviews_productos,
+		sentiment_score
+	FROM cte_2
+	WHERE 1=1
+	AND top_productos_del_mes = 1
+)
+SELECT * FROM cte_3
+EXCEPT
+SELECT * FROM cte_3
+WHERE 1=1
+AND CountryReview = 'No information record'
+GROUP BY CountryReview,MonthReview,productASIN,conteo_reviews_productos,sentiment_score
+;
+
+
 --2. ¿Cuales fueron el top 5 de marcas que más recibieron 5 estrellas por la distribución de sus productos y qué productos fueron esos?
 --3. ¿Cuál fue el producto con más reviews pero que peor sentiment_score tuvo y en qué ranking de productos está?
 
