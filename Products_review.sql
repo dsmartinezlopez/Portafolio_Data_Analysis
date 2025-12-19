@@ -41,17 +41,17 @@ WHERE productASIN IS NULL
 
 --------------------------------------------------------------------------------
 SELECT 
-	asin, 
+	ID_producto, 
 	COUNT(*) AS duplicados
 FROM Products
-GROUP BY asin
+GROUP BY ID_producto
 HAVING COUNT(*) > 1
 
 -- Resultado: No hay valores duplicados para cada producto. Esto quiere decir que la conexión entre tablas queda:
 -- Products 1------* Reviews
 
 SELECT * FROM Products
-WHERE asin IS NULL
+WHERE ID_producto IS NULL
 
 -- Resultado: No hay valores nulos para los ID de productos
 
@@ -60,12 +60,13 @@ SELECT
 *
 FROM Products A
 LEFT JOIN Reviews B
-ON A.asin = B.productASIN
+ON A.ID_producto = B.productASIN
 
 --Exploración 
 
 --Preguntas:
---1. ¿Cuales fueron los meses que más se revisaron productos para cada uno de los países y cual fue el promedio del sentiment_score en esos meses para cada producto?
+--1. ¿Cuales fueron los meses que más se revisaron productos para cada uno de los países y cual fue el promedio 
+--del sentiment_score en esos meses para cada producto?
 
  WITH cte_1 AS(
 	SELECT 
@@ -105,8 +106,31 @@ GROUP BY CountryReview,MonthReview,productASIN,conteo_reviews_productos,sentimen
 ;
 
 
---2. ¿Cuales fueron el top 5 de marcas que más recibieron 5 estrellas por la distribución de sus productos y qué productos fueron esos?
---3. ¿Cuál fue el producto con más reviews pero que peor sentiment_score tuvo y en qué ranking de productos está?
+--2. ¿Cuales fueron el top 5 de marcas que más recibieron 5 estrellas por la distribución de sus productos y que 
+--tuvieron más de 1000 encuestas por ese producto y qué productos fueron esos?
 
+EXEC sp_rename 'Products.5rating_distribution', 'rating_distribution', 'COLUMN';
+EXEC sp_rename 'Products.asin', 'ID_producto', 'COLUMN';
+
+SELECT 
+	TOP 5 *
+FROM(
+	SELECT
+		brand_name,
+		ID_producto AS productos,
+		rating_count * 1000 AS Cantidad_encuestas,
+		product_url AS Link,
+		FORMAT(AVG(COALESCE(TRY_CAST(rating_distribution AS decimal(20,3)),0)),'P0') AS distribución,
+		DENSE_RANK() OVER(PARTITION BY brand_name ORDER BY rating_distribution ASC) AS ranking_marca
+	FROM Products
+	GROUP BY brand_name,ID_producto,product_url,rating_count,rating_distribution
+) AS consulta
+WHERE 1=1
+AND ranking_marca = 1
+AND Cantidad_encuestas > 1000
+ORDER BY distribución DESC
+
+
+--3. ¿Cuál fue el producto con más reviews pero que peor sentiment_score tuvo y en qué ranking de productos está?
 
 
