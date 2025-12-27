@@ -58,4 +58,14 @@ WHERE ID_producto IS NULL
 
 -- Resultado: No hay valores nulos para los ID de productos
 ```
+Paso 5: Relaciones entre tablas
+
+```bash
+SELECT 
+*
+FROM Products A
+LEFT JOIN Reviews B
+ON A.ID_producto = B.productASIN
+```
+
 
