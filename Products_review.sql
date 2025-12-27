@@ -161,3 +161,47 @@ ON A.productASIN = B.ID_producto
 WHERE 1=1
 AND B.Subcategoria IS NOT NULL
 ORDER BY contador_reviews DESC
+
+--4. ¿Cuándo fue el último review de un producto y cuantos días han pasado desde la fecha a la actualidad?
+
+CREATE VIEW fecha_formateada 
+AS
+SELECT
+	productASIN,
+	reviewID,
+	YearReview,
+	MonthReview,
+	DayReview
+FROM Reviews
+
+ALTER VIEW fecha_formateada
+AS
+SELECT
+	productASIN,
+	reviewID,
+	FORMAT(TRY_CAST(fecha AS date), 'dd-MMM-yyyy') AS fecha_review
+FROM(
+	SELECT
+		productASIN,
+		reviewID,
+		CONCAT(DayReview,'/',MonthReview,'/',YearReview) AS fecha
+	FROM Reviews
+) AS formato
+
+-- fecha review último producto y días de diferencia a hoy
+
+SELECT
+	último_review,
+	hoy,
+	DATEDIFF(DAY,último_review,hoy) AS días_de_diferencia
+FROM(
+	SELECT 
+		MAX(CONVERT(DATE, fecha_review, 106)) AS último_review,
+		CONVERT(DATE, GETDATE(), 106) AS hoy
+	FROM fecha_formateada
+	WHERE 1=1 
+	AND fecha_review IS NOT NULL
+) AS fechas
+
+--5. ¿Cuántas reviews por día de la semana de cada mes y año tuvo el producto que más se comercializó en EE.UU?
+
