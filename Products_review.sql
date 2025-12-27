@@ -205,3 +205,26 @@ FROM(
 
 --5. ¿Cuántas reviews por día de la semana de cada mes y año tuvo el producto que más se comercializó en EE.UU?
 
+SET DATEFIRST 7
+
+SELECT 
+	productASIN,
+	reviewID,
+	fecha_review,
+	CASE
+		WHEN día_semana = 1 THEN 'Domingo'
+		WHEN día_semana = 2 THEN 'Lunes'
+		WHEN día_semana = 3 THEN 'Martes'
+		WHEN día_semana = 4 THEN 'Miércoles'
+		WHEN día_semana = 5 THEN 'Jueves'
+		WHEN día_semana = 6 THEN 'Viernes'
+		WHEN día_semana = 7 THEN 'Sábado'
+	END AS día
+FROM(
+	SELECT
+		productASIN,
+		reviewID,
+		fecha_review,
+		DATEPART(WEEKDAY,fecha_review) AS día_semana
+	FROM fecha_formateada
+) AS sub_1
