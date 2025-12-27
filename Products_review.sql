@@ -131,6 +131,33 @@ AND Cantidad_encuestas > 1000
 ORDER BY distribución DESC
 
 
---3. ¿Cuál fue el producto con más reviews pero que peor sentiment_score tuvo y en qué ranking de productos está?
+--3. ¿Cuáles fueron los productos y las subcategorias con más reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
 
+EXEC sp_rename 'Products.Level 2 - Category', 'Subcategoria', 'COLUMN';
 
+WITH cte_ranking AS(
+	SELECT 
+		productASIN,
+		contador_reviews,
+		AVG(promedio_score) AS sentiment_score
+	FROM 
+		(SELECT
+			productASIN,
+			COUNT(*) OVER(PARTITION BY(productASIN)) AS contador_reviews,
+			AVG(COALESCE(TRY_CAST(sentiment_score AS decimal(20,5)),0)) OVER(PARTITION BY(reviewID))  AS promedio_score
+		FROM Reviews
+		GROUP BY productASIN,sentiment_score,reviewID
+		HAVING COUNT(*) >= 1
+		) AS Subconsulta
+	GROUP BY productASIN,contador_reviews
+)
+SELECT
+	A.*,
+	B.Subcategoria,
+	COALESCE(TRY_CAST(B.product_ranking AS INT),0) AS ranking_producto
+FROM cte_ranking A
+INNER JOIN Products B
+ON A.productASIN = B.ID_producto
+WHERE 1=1
+AND B.Subcategoria IS NOT NULL
+ORDER BY contador_reviews DESC
