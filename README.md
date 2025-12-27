@@ -45,7 +45,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   
   **Skills:** Data Visualization, Data Manipulation, Storytelling.
   
-  **Technology:** DAX, Power Query, Power Pivot, M.
+  **Technology:** `DAX`, `Power Query`, `Power Pivot`, `M`.
   
   **Results:** 
   1. In comparison of the overall scores, socioeconomic stratum 6 vs the others is 47.69% above the national average.
@@ -65,7 +65,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   
   **Skills:** Statistic Models, Data Cleaning, Data Manipulation, Data Visualization.
   
-  **Technology:** Pandas, Numpy, Matplotlib, Seaborn, Scikit-learn.
+  **Technology:** `Pandas`, `Numpy`, `Matplotlib`, `Seaborn`, `Scikit-learn`.
   
   **Results:** The results found for each of the hypotheses were:
   
