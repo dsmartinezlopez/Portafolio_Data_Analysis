@@ -215,24 +215,50 @@ FROM(
 SET DATEFIRST 7
 
 SELECT 
-	productASIN,
-	reviewID,
-	fecha_review,
-	CASE
-		WHEN día_semana = 1 THEN 'Domingo'
-		WHEN día_semana = 2 THEN 'Lunes'
-		WHEN día_semana = 3 THEN 'Martes'
-		WHEN día_semana = 4 THEN 'Miércoles'
-		WHEN día_semana = 5 THEN 'Jueves'
-		WHEN día_semana = 6 THEN 'Viernes'
-		WHEN día_semana = 7 THEN 'Sábado'
-	END AS día
-FROM(
-	SELECT
-		productASIN,
+	ID_producto,
+	product_url,
+	rating_count AS multiplicador
+FROM Products
+ORDER BY multiplicador DESC
+
+--El producto que tuvo más calificaciones por parte de los clientes fue el B0B1WMKNM5
+
+
+WITH cte_fechas AS(
+	SELECT 
 		reviewID,
-		fecha_review,
-		DATEPART(WEEKDAY,fecha_review) AS día_semana
-	FROM fecha_formateada
-) AS sub_1
+		YearReview,
+		MonthReview,
+		CASE
+			WHEN día_semana = 1 THEN 'Domingo'
+			WHEN día_semana = 2 THEN 'Lunes'
+			WHEN día_semana = 3 THEN 'Martes'
+			WHEN día_semana = 4 THEN 'Miércoles'
+			WHEN día_semana = 5 THEN 'Jueves'
+			WHEN día_semana = 6 THEN 'Viernes'
+			WHEN día_semana = 7 THEN 'Sábado'
+		END AS día
+	FROM(
+		SELECT
+			productASIN,
+			reviewID,
+			YearReview,
+			MonthReview,
+			DATEPART(WEEKDAY,fecha_review) AS día_semana
+		FROM fecha_formateada
+		WHERE 1=1
+		AND CountryReview = 'United States'
+		AND productASIN = 'B0B1WMKNM5'
+	) AS sub_1
+)
+SELECT
+	*
+FROM cte_fechas
+PIVOT
+(
+	COUNT(reviewID)
+	FOR	día IN([Lunes],[Martes],[Miércoles],[Jueves],[Viernes],[Sábado],[Domingo])
+) AS pvt 
+
+ORDER BY YearReview ASC
 ```
