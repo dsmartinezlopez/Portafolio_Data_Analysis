@@ -67,5 +67,14 @@ FROM Products A
 LEFT JOIN Reviews B
 ON A.ID_producto = B.productASIN
 ```
+### Exploración
 
+## 1. ¿Cuales fueron los meses que más se revisaron productos para cada uno de los países y cual fue el promedio del sentiment_score en esos meses para cada producto?
 
+## 2. ¿Cuales fueron el top 5 de marcas que más recibieron 5 estrellas por la distribución de sus productos y que tuvieron más de 1000 encuestas por ese producto y qué productos fueron esos?
+
+## 3. ¿Cuáles fueron los productos y las subcategorias con más reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
+
+## 4. ¿Cuándo fue el último review de un producto y cuantos días han pasado desde la fecha a la actualidad?
+
+## 5. ¿Cuántas reviews por día de la semana de cada mes y año tuvo el producto que más se comercializó en EE.UU?
