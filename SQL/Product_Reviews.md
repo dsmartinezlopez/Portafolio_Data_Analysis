@@ -1,5 +1,9 @@
 ## Proyecto product reviews Amazon
 
+Esta es una explicación de paso por paso en SQL para el desarrollo de este proyecto.
+
+Ver código completo: [Product_Reviews](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Products_review.sql)
+
 Paso 1: Vista general de las tablas 
 
 ```bash
