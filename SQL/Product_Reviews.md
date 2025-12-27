@@ -1,6 +1,6 @@
 ## Proyecto product reviews Amazon
 
-Esta es una explicación de paso por paso en SQL para el desarrollo de este proyecto.
+Esta es una explicación de paso por paso en MS SQL Server para el desarrollo de este proyecto.
 
 Código completo: [Product_Reviews](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Products_review.sql)
 
