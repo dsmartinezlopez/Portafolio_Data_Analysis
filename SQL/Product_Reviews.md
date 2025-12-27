@@ -35,5 +35,27 @@ FROM Reviews
 GROUP BY productASIN
 HAVING COUNT(*) > 1
 ORDER BY veces_repetidas DESC
+-- Resultado: Existen valores repetidos. Esto porque pueden haber varias revisiones para un mismo producto
+
+SELECT * FROM Reviews
+WHERE productASIN IS NULL
+
+-- Resultado: No hay valores nulos para los ID de los productos
+
+--------------------------------------------------------------------------------
+SELECT 
+	ID_producto, 
+	COUNT(*) AS duplicados
+FROM Products
+GROUP BY ID_producto
+HAVING COUNT(*) > 1
+
+-- Resultado: No hay valores duplicados para cada producto. Esto quiere decir que la conexión entre tablas queda:
+-- Products 1------* Reviews
+
+SELECT * FROM Products
+WHERE ID_producto IS NULL
+
+-- Resultado: No hay valores nulos para los ID de productos
 ```
 
