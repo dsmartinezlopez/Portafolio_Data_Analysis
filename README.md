@@ -17,7 +17,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 # Portafolio Projects
 
 ### SQL:
-  - Project 1: [Amazon products review](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Products_review.sql)
+  - Project 1: [Amazon products review](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Product_Reviews.md)
   
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets) database to obtain information on reviews of textile products (clothing) that are sold on [Amazon](https://www.amazon.com/?&tag=googleuscol05-20&ref=pd_sl_7d0mn8q9wb_e&adgrpid=159179349492&hvpone=&hvptwo=&hvadid=675113331081&hvpos=&hvnetw=g&hvrand=5229642513776563736&hvqmt=e&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9219397&hvtargid=kwd-10573980&hydadcr=8635_13668851&language=es_US) through sentiment analysis and product ranking.
   
