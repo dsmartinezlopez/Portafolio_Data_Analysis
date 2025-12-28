@@ -74,7 +74,6 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 
 [Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
 
-  - Project 1: DB Spotify Global Music Dataset (2009–2025) > [Kaggle](https://www.kaggle.com/datasets/wardabilal/spotify-global-music-dataset-20092025)
   
 # Contact
 
