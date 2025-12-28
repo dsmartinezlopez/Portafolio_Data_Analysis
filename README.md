@@ -71,10 +71,10 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   3. There is a correlation between variables and a dependence between place of residence and the results of the Saber Pro tests. This is a worrying issue because it creates a social gap in education, meaning that students living in rural areas are receiving a lower level of education than those living in urban centers. The government and the Ministry of Education must focus on reducing inequalities and educational gaps.
 
 ### Tableau:
-  - Project 1: [Spotify Global Music Dataset (2009–2025)]()
 
+[Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
 
-[Kaggle](https://www.kaggle.com/datasets/wardabilal/spotify-global-music-dataset-20092025)
+  - Project 1: DB Spotify Global Music Dataset (2009–2025) > [Kaggle](https://www.kaggle.com/datasets/wardabilal/spotify-global-music-dataset-20092025)
   
 # Contact
 
