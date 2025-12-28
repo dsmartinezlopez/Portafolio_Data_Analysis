@@ -24,7 +24,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Description:** On one hand, the database contains information about products categorized as clothing, with a unique identifier that is the product item, as well as the brands or stores that sell it and the ratings it has received from buyers. On the other hand, regarding reviews, there is data on the country, review dates, and sentiment score.
 
   **Schema:**
-  ![Schema](SQL/schema project 1 sql.png)
+  ![Schema](schema project 1 sql.png)
   
   **Skills:** Data Importation, Data Manipulation, JOINS, aggregation functions, category functions, date functions, CTE query's, sub-query's, windows functions. 
   
