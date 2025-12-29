@@ -33,7 +33,9 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   **Technology:** `MS SQL Server`, `T-SQL`
 
+  - Project 1 (Medium-level):
 
+    
 ### Tableau:
 
 [Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
