@@ -60,7 +60,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   2. In the overall results, distance learning students were -36.94% below the average while face-to-face students were 6.43% above, that is, a GAP of 43.37% between the two.
   3. The overall score of students living in rural areas was 22.6% below the national average.  
 
-### Python:
+### Python + IA:
   - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
     
   **Goal:** Statistically demonstrate the verification of these 3 hypotheses:
