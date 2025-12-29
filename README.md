@@ -33,7 +33,6 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   **Technology:** `MS SQL Server`, `T-SQL`
 
-  - Project 2:
 
 ### Tableau:
 
