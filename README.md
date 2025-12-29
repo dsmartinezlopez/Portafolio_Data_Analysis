@@ -34,6 +34,11 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Technology:** `MS SQL Server`, `T-SQL`
 
 
+### Tableau:
+
+[Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
+
+
 ### Power BI: 
   - Project 1: [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
    
@@ -76,9 +81,6 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   2. Statistically, a strong trend was found for engineering students to achieve better results on the Icfes Saber Pro exams compared to those who studied remotely. This suggests that the mode of study can directly influence student education and, consequently, impact Colombia's productivity; universities should focus on this.
   3. There is a correlation between variables and a dependence between place of residence and the results of the Saber Pro tests. This is a worrying issue because it creates a social gap in education, meaning that students living in rural areas are receiving a lower level of education than those living in urban centers. The government and the Ministry of Education must focus on reducing inequalities and educational gaps.
 
-### Tableau:
-
-[Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
 
   
 # Contact
