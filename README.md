@@ -36,7 +36,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
   
 
-  - Project 2 (Medium-level):
+  - Project 2 (Medium-level): [Brazilian e-commerce](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Brazilian%20E-commerce.md)
 
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) database to obtain information 
   
@@ -44,7 +44,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
   **Schema:**
   
-  **Skills:** Data Importation, Data Manipulation, JOINS, aggregation functions, category functions, date functions, CTE query's, sub-query's, windows functions. 
+  **Skills:** 
   
   **Technology:** `MS SQL Server`, `T-SQL`
 
