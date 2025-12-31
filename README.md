@@ -47,11 +47,15 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Skills:** Data Importation, Data Manipulation, JOINS, aggregation functions, category functions, date functions, CTE query's, sub-query's, windows functions. 
   
   **Technology:** `MS SQL Server`, `T-SQL`
-    
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
 ### Tableau:
 
 [Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
 
+-------------------------------------------------------------------------------------------------------------------------------------
 
 ### Power BI: 
   - Project 1: [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
@@ -73,6 +77,8 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
   1. In comparison of the overall scores, socioeconomic stratum 6 vs the others is 47.69% above the national average.
   2. In the overall results, distance learning students were -36.94% below the average while face-to-face students were 6.43% above, that is, a GAP of 43.37% between the two.
   3. The overall score of students living in rural areas was 22.6% below the national average.  
+
+-------------------------------------------------------------------------------------------------------------------------------------
 
 ### Python + IA:
   - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
