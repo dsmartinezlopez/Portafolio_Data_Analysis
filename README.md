@@ -45,7 +45,9 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   **Schema:**
 
 
-  ![Schema](schema sql project 2.png)
+  ![Schema2](schema sql project 2.png)
+
+  
   **Skills:** 
   
   **Technology:** `MS SQL Server`, `T-SQL`
