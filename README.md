@@ -84,7 +84,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
-### Python + IA:
+### Python:
   - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
     
   **Goal:** Statistically demonstrate the verification of these 3 hypotheses:
