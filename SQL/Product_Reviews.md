@@ -4,6 +4,9 @@ Esta es una explicación de paso por paso en MS SQL Server para el desarrollo de
 
 Código completo: [Product_Reviews](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Products_review.sql)
 
+> [!NOTE]
+> Si tienes instalado en tu PC MS SQL Server puedes copiar y pegar todo el código completo. Sin embargo, para efectos de organización a continuación se muestra el paso a paso de lo que se realizó.
+
 Paso 1: Vista general de las tablas 
 
 ```bash
