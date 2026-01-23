@@ -1,6 +1,6 @@
 # About me
 
-Hi! I'm David, welcome to my Data Analytical portafolio. 
+Hi! 👋 I'm David, welcome to my Data Analytical portafolio. 
 
 This repository serves as a collection of projects that demonstrate my ability to transform raw data into actionable insights, supporting data-driven decision-making.
 
