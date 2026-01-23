@@ -71,7 +71,7 @@ FROM Products A
 LEFT JOIN Reviews B
 ON A.ID_producto = B.productASIN
 ```
-## Etapa de exploración
+## Etapa de exploración - preguntas de negocio
 
 #### 1. ¿Cuales fueron los meses que más se revisaron productos para cada uno de los países y cual fue el promedio del sentiment_score en esos meses para cada producto?
 
