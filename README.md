@@ -59,6 +59,9 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
 [Tableau Public](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/vizzes)
 
+> [!NOTE]
+> This is my public profile showcasing some projects that have caught my attention. I invite you to explore them and follow me!
+
 -------------------------------------------------------------------------------------------------------------------------------------
 
 ### Power BI: 
