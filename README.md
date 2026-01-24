@@ -37,7 +37,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
 
 
-
+ 
 
   
 
