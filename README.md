@@ -45,7 +45,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) database to obtain information about on e-commerce in Brazil, presenting key operational indicators such as delivery times and on-time fulfillment. It also offers a business perspective on revenue metrics, which are often of interest to company executives in this industry.
   
-  **Description:** 
+  **Description:** The database contains 6 tables that I consolidated for this project; within these tables there is information about purchase orders, customers, vendors, geolocation, products, and payments.
 
   **Schema:**
 
