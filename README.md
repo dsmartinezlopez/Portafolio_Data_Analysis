@@ -33,7 +33,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   **Technology:** `MS SQL Server`, `T-SQL`
 
-  **Conclusion:** 
+  **Conclusion:** The database was successfully imported into MS SQL Server, and then the model to be analyzed was created, ensuring the correct handling of null values, the connection between tables, and the cleaning of the data to include only what was truly needed. This was done to answer, through queries, the business questions that companies ask themselves on a daily basis.
 
 
 
