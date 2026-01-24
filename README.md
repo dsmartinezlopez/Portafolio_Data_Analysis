@@ -35,6 +35,10 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
   **Conclusion:** 
 
+
+
+
+
   
 
   - Project 2 (Medium-level): [Brazilian e-commerce](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Brazilian%20E-commerce.md) + [Tableau Dashboard](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/viz/Anlisise-commerceenBrasil/Operativo)
