@@ -21,3 +21,17 @@ Código completo: [E-commerce Brazil](https://github.com/dsmartinezlopez/Portafo
 
 ## Análisis con visión de negocio/revenue
 
+### Ingresos
+
+#### 1. ¿Cuál fue la suma del total de pagos que se cerró al primer día de cada mes? muestre el total acumulado de los pagos MoM (Month-over-Month)
+#### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
+
+### Utilidades
+
+#### 1. ¿Cuáles fueron el TOP 3 de ciudades por cada estado que más utilidades obtuvieron? 
+
+### Flujo de caja
+
+#### 1. ¿Con qué medio de pago se registró la compra más alta que se pagó de contado y en qué fecha se ejecutó la compra? 
+#### 2. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
+
