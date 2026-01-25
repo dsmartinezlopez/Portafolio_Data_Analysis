@@ -13,9 +13,24 @@ Código completo: [E-commerce Brazil](https://github.com/dsmartinezlopez/Portafo
 ## Análisis con visión operativa
 
 #### 1. ¿Cuál fue el volumen de pedidos enviados y cuántos cumplieron el tiempo de entrega y cuántos no?
+
+```bash
+```
+
 #### 2. ¿Cuál es el GAP de incumplimiento de entregas comparando MoM (Month-over-Month) de cada año?
+
+```bash
+```
+
 #### 3. Si la clasificación de los productos se establece de acuerdo al peso, donde SMALL se denomina todo lo que pese <= 1000 gramos, MEDIUM todo lo que pese > 1000 gramos y <= 10000 gramos, y BIG todo lo que pese > 10000 gramos ¿cuales fueron las clasificaciones que más porcentaje de incumplimiento tuvieron ordenadas de forma descendente?
+
+```bash
+```
+
 #### 4. ¿Cuál fue el TOP 5 de órdenes_id enviadas que más se demoraron en completarse? muestre id de la orden, producto(s), ciudad origen (vendedor), ciudad destino (comprador) y cantidad de días transcurridos desde la fecha de compra y la fecha de entrega. 
+
+```bash
+```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -30,12 +45,25 @@ Código completo: [E-commerce Brazil](https://github.com/dsmartinezlopez/Portafo
 
 #### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
 
+```bash
+```
+
 ### Utilidades
 
 #### 1. ¿Cuáles fueron el TOP 3 de ciudades por cada estado que más utilidades obtuvieron? 
 
+```bash
+```
+
 ### Flujo de caja
 
 #### 1. ¿Con qué medio de pago se registró la compra más alta que se pagó de contado y en qué fecha se ejecutó la compra? 
+
+```bash
+```
+
 #### 2. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
+
+```bash
+```
 
