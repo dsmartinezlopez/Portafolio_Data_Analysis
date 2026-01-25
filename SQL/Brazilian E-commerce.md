@@ -24,6 +24,10 @@ Código completo: [E-commerce Brazil](https://github.com/dsmartinezlopez/Portafo
 ### Ingresos
 
 #### 1. ¿Cuál fue la suma del total de pagos que se cerró al primer día de cada mes? muestre el total acumulado de los pagos MoM (Month-over-Month)
+
+```bash
+```
+
 #### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
 
 ### Utilidades
