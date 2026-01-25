@@ -41,7 +41,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
 
   
 
-  - **Project 2 (Medium-level):** [Brazilian e-commerce](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Brazilian%20E-commerce.md) + [Tableau Dashboard](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/viz/Anlisise-commerceenBrasil/Operativo)
+####  - **Project 2 (Medium-level):** [Brazilian e-commerce](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Brazilian%20E-commerce.md) + [Tableau Dashboard](https://public.tableau.com/app/profile/david.santiago.martinez.lopez/viz/Anlisise-commerceenBrasil/Operativo)
 
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) database to obtain information about on e-commerce in Brazil, presenting key operational indicators such as delivery times and on-time fulfillment. It also offers a business perspective on revenue metrics, which are often of interest to company executives in this industry.
   
