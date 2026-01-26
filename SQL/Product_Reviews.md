@@ -194,7 +194,15 @@ ORDER BY distribución DESC
 #### Resultado
 
 ```bash
-
+/*-----------------------------+------------+--------------------+--------------------------------------+---------------+---------------+
+| brand_name                   | productos  | Cantidad_encuestas | Link                                 | distribución  | ranking_marca |
++------------------------------+------------+--------------------+--------------------------------------+---------------+---------------+
+| Burt's Bees Baby Store       | B07M6SSQXH | 21640              | https://www.amazon.com/dp/B07M6SSQXH | 87%           | 1             |
+| Little Me Store              | B071HWBZX1 | 8994               | https://www.amazon.com/dp/B071HWBZX1 | 87%           | 1             |
+| Brand: Handcraft             | B0D2JCJRFT | 101000             | https://www.amazon.com/dp/B0D2JCJRFT | 86%           | 1             |
+| Mioglrie Store               | B08Z755PCH | 4038               | https://www.amazon.com/dp/B08Z755PCH | 86%           | 1             |
+| Simple Joys by Carter's Store| B073WMFKPZ | 16170              | https://www.amazon.com/dp/B073WMFKPZ | 86%           | 1             |
++------------------------------+------------+--------------------+--------------------------------------+---------------+---------------+
 ```
 
 #### 3. ¿Cuáles fueron los productos y las subcategorias con más reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
