@@ -15,6 +15,45 @@ Código completo: [E-commerce Brazil](https://github.com/dsmartinezlopez/Portafo
 #### 1. ¿Cuál fue el volumen de pedidos enviados y cuántos cumplieron el tiempo de entrega y cuántos no?
 
 ```bash
+WITH cte_1 AS (
+	SELECT
+		order_id,
+		order_status,
+		COUNT(*) AS contador_orders,
+		order_delivered_customer_date AS fecha_envío_customer
+	FROM Orders$
+	GROUP BY order_id, order_status, order_delivered_customer_date
+
+), 
+cte_2 AS(
+	SELECT
+		A.order_id AS orden_id,
+		contador_orders,
+		COALESCE(SUM(CASE WHEN A.fecha_envío_customer > B.shipping_limit_date THEN 1 END)/SUM(CASE WHEN A.fecha_envío_customer > B.shipping_limit_date THEN 1 END),0) AS retardo,
+		COALESCE(SUM(CASE WHEN A.fecha_envío_customer <= B.shipping_limit_date THEN 1 END)/SUM(CASE WHEN A.fecha_envío_customer <= B.shipping_limit_date THEN 1 END),0) AS cumplió
+	FROM cte_1 A
+	INNER JOIN ['Orders items$'] B
+	ON A.order_id = B.order_id
+	WHERE 1=1
+	AND A.order_status = 'delivered'
+	AND A.fecha_envío_customer IS NOT NULL 
+	GROUP BY A.order_id, contador_orders
+),
+cte_3 AS(
+	SELECT
+		orden_id,
+		contador_orders,
+		retardo,
+		cumplió,
+		SUM(CASE WHEN retardo = cumplió THEN 1 END) AS pedidos_semiincumplidos
+	FROM cte_2
+	GROUP BY orden_id, contador_orders, retardo, cumplió
+)
+SELECT 
+	COUNT(contador_orders) AS total_pedidos_enviados,
+	SUM(cumplió)-SUM(pedidos_semiincumplidos) AS pedidos_que_cumplieron,
+	SUM(retardo) AS pedidos_retrasados
+FROM cte_3
 ```
 
 #### 2. ¿Cuál es el GAP de incumplimiento de entregas comparando MoM (Month-over-Month) de cada año?
