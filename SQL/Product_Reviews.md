@@ -190,6 +190,13 @@ AND ranking_marca = 1
 AND Cantidad_encuestas > 1000
 ORDER BY distribución DESC
 ```
+
+#### Resultado
+
+```bash
+
+```
+
 #### 3. ¿Cuáles fueron los productos y las subcategorias con más reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
 
 ```bash
