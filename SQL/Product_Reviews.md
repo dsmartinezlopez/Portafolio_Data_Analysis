@@ -116,6 +116,56 @@ AND CountryReview = 'No information record'
 GROUP BY CountryReview,MonthReview,productASIN,conteo_reviews_productos,sentiment_score
 ;
 ```
+
+#### Resultado
+
+```bash
+/*-----------------------+-------------+-------------+--------------------------+------------------+
+ | CountryReview         | MonthReview| productASIN | conteo_reviews_productos | sentiment_score  |
+ +-----------------------+-------------+-------------+--------------------------+------------------+
+ | Belgium               | November   | B0BZ92J5MM  | 1                        | 0.000000         |
+ | Canada                | February   | B09CVB14HY  | 1                        | 0.300000         |
+ | Germany               | February   | B0BN39ZRYD  | 1                        | 0.000000         |
+ | Germany               | November   | B0D8GYHB4M  | 1                        | 0.000000         |
+ | Germany               | September  | B08DD9LQ9S  | 1                        | -0.420000        |
+ | India                 | April      | B01C7KBKJU  | 1                        | 0.750000         |
+ | India                 | August     | B08M429KCV  | 2                        | 0.165000         |
+ | India                 | December   | B01C7KBKJU  | 3                        | 0.103333         |
+ | India                 | February   | B0D3XM6H68  | 6                        | 0.538333         |
+ | India                 | January    | B0BRVDXXYV  | 4                        | 0.475000         |
+ | India                 | July       | B0CTZZP8LN  | 2                        | 0.250000         |
+ | India                 | June       | B0B38Y9436  | 2                        | 0.395000         |
+ | India                 | March      | B01C7KBKJU  | 2                        | 0.490000         |
+ | India                 | May        | B0CQG4FZ5M  | 2                        | 0.625000         |
+ | India                 | November   | B07VCLR2ZS  | 3                        | 0.216666         |
+ | India                 | October    | B0D79795VN  | 4                        | 0.312500         |
+ | India                 | September  | B0B4FWZB49  | 2                        | 0.180000         |
+ | Mexico                | January    | B0BZ92J5MM  | 1                        | 0.000000         |
+ | Mexico                | June       | B0BZ92J5MM  | 2                        | 0.025000         |
+ | United Arab Emirates  | August     | B08DD9LQ9S  | 1                        | -0.150000        |
+ | United Arab Emirates  | March      | B0C2DFMQ3V  | 1                        | 0.700000         |
+ | United Arab Emirates  | October    | B08M429KCV  | 1                        | 0.000000         |
+ | United Kingdom        | August     | B0BN39ZRYD  | 1                        | 0.000000         |
+ | United Kingdom        | December   | B0BN39ZRYD  | 1                        | 0.600000         |
+ | United Kingdom        | February   | B0BNF2F5QZ  | 1                        | 0.550000         |
+ | United Kingdom        | November   | B0C8MYJMTG  | 1                        | 0.700000         |
+ | United Kingdom        | October    | B0BC3PS8XJ  | 1                        | 0.520000         |
+ | United States         | April      | B077SVB38N  | 3                        | 0.146666         |
+ | United States         | August     | B07SN9RS13  | 3                        | 0.186666         |
+ | United States         | December   | B0C24NCRHX  | 6                        | 0.371666         |
+ | United States         | February   | B0B883C9XX  | 9                        | 0.264444         |
+ | United States         | January    | B0874WPYV6  | 7                        | 0.480000         |
+ | United States         | July       | B01BDZMRR4  | 5                        | 0.230000         |
+ | United States         | June       | B09Q618MMY  | 4                        | 0.312500         |
+ | United States         | March      | B0DRJ7HB8Y  | 10                       | 0.253000         |
+ | United States         | May        | B071GB2K21  | 3                        | 0.133333         |
+ | United States         | November   | B0BC3PS8XJ  | 4                        | 0.750000         |
+ | United States         | October    | B07FMZ31SR  | 3                        | 0.130000         |
+ | United States         | September  | B074KL8RVS  | 3                        | 0.270000         |
+ +-----------------------+-------------+-------------+--------------------------+------------------+*/
+```
+
+
 #### 2. ¿Cuales fueron el top 5 de marcas que más recibieron 5 estrellas por la distribución de sus productos y que tuvieron más de 1000 encuestas por ese producto y qué productos fueron esos?
 
 ```bash
