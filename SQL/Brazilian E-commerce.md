@@ -56,6 +56,10 @@ SELECT
 FROM cte_3
 ```
 
+#### Resultado:
+
+![Salida](SQL/Captura de pantalla 2026-01-26 132033.png)
+
 #### 2. ¿Cuál es el GAP de incumplimiento de entregas comparando MoM (Month-over-Month) de cada año?
 
 Reutilizamos la información obtenida de la consulta anterior para crear una vista que va a ser de utilidad para el análisis de cumplimientos e incumplimientos. 
