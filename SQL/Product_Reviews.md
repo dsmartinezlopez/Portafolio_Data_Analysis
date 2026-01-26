@@ -205,7 +205,7 @@ ORDER BY distribución DESC
 +------------------------------+------------+--------------------+--------------------------------------+---------------+---------------+
 ```
 
-#### 3. ¿Cuáles fueron los productos y las subcategorias con más reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
+#### 3. ¿Cuáles fueron los productos y las subcategorias con más de 10 reviews pero que peor sentiment_score tuvieron y en qué ranking de productos estuvieron?
 
 ```bash
 EXEC sp_rename 'Products.Level 2 - Category', 'Subcategoria', 'COLUMN';
@@ -235,8 +235,66 @@ INNER JOIN Products B
 ON A.productASIN = B.ID_producto
 WHERE 1=1
 AND B.Subcategoria IS NOT NULL
+AND A.contador_reviews > 10
 ORDER BY contador_reviews DESC
 ```
+
+#### Resultado
+
+```bash
+/*----------+------------------+----------------+--------------------------------------+--------------------------+
+ | productASIN| contador_reviews | sentiment_score| Subcategoria                        | ranking_producto(número) |
+ +----------+------------------+----------------+--------------------------------------+--------------------------+
+ | B074KL8RVS | 19               | 0.448474       | 13 in Men's Jeans                   | 470                      |
+ | B074KL2SHP | 14               | 0.329770       | 13 in Men's Jeans                   | 470                      |
+ | B07HR877BN | 14               | 0.213671       | 118 in Men's T-Shirts               | 118                      |
+ | B07DRMT92L | 13               | 0.218287       | 3 in Men's Activewear T-Shirts      | 376                      |
+ | B08Q86H92W | 13               | 0.350365       | 30 in Men's Flat Front Shorts       | 30                       |
+ | B07H12JDN6 | 12               | 0.393430       | 30 in Men's Jeans                   | 30                       |
+ | B08GZL48D9 | 12               | 0.280395       | 2 in Men's Boxer Shorts             | 118                      |
+ | B00NOY3JKW | 12               | 0.220929       | 1 in Men's T-Shirts                 | 3                        |
+ | B016Y8268U | 12               | 0.247250       | 11 in Men's Flat Front Shorts       | 11                       |
+ | B07JR4NDKS | 12               | 0.407177       | 94 in Men's T-Shirts                | 94                       |
+ | B09Q618MMY | 12               | 0.259638       | 260 in Men's Casual Pants           | 260                      |
+ | B09S6VVX5B | 11               | 0.204292       | 5 in Men's T-Shirts                 | 108                      |
+ | B09Y8TM3LL | 11               | 0.396995       | 128 in Men's Jeans                  | 128                      |
+ | B0B47Q6QYP | 11               | 0.330830       | 284 in Men's Polo Shirts            | 284                      |
+ | B0B84WZ5DY | 11               | 0.209910       | 29 in Men's Jeans                   | 29                       |
+ | B0BGSDG377 | 11               | 0.347864       | 5 in Men's Activewear Polos         | 5                        |
+ | B0BLRWCWCB | 11               | 0.261883       | 6 in Men's Running Shorts           | 6                        |
+ | B0BPF1R8KC | 11               | 0.347267       | 11 in Men's T-Shirts                | 114                      |
+ | B0BZZSK8TF | 11               | 0.461145       | 23 in Men's Polo Shirts             | 23                       |
+ | B0C9C7TKQ7 | 11               | 0.406126       | 857 in Men's Clothing               | 857                      |
+ | B0CCT3WHSS | 11               | 0.203296       | 1 in Men's Novelty T-Shirts         | 115                      |
+ | B0CJTZLCQ2 | 11               | 0.333776       | 24 in Men's Button-Down Shirts      | 24                       |
+ | B0CNXK4KRH | 11               | 0.420128       | 49 in Men's Button-Down Shirts      | 49                       |
+ | B0CSWGBR4L | 11               | 0.380424       | 30 in Men's Activewear T-Shirts     | 30                       |
+ | B0D9GXG945 | 11               | 0.225320       | 42 in Men's Polo Shirts             | 42                       |
+ | B0DMRJYXLP | 11               | 0.405410       | 104 in Men's Athletic Shorts        | 104                      |
+ | B0DPZQCX42 | 11               | 0.242407       | 69 in Men's Dress Pants             | 69                       |
+ | B07LGQ884Z | 11               | 0.336750       | 1 in Men's Jeans                    | 78                       |
+ | B086KKT21F | 11               | 0.299244       | 4 in Men's Undershirts              | 102                      |
+ | B086L1PM8V | 11               | 0.297564       | 17 in Men's T-Shirts                | 580                      |
+ | B0874W4WQ9 | 11               | 0.297997       | 1 in Men's Compression Shirts       | 373                      |
+ | B0874WD2B2 | 11               | 0.375301       | 7 in Men's Activewear T-Shirts      | 662                      |
+ | B08BC4HDS2 | 11               | 0.241816       | 10 in Men's Activewear T-Shirts     | 10                       |
+ | B08F2P8CS9 | 11               | 0.291768       | 1 in Men's Undershirts              | 10                       |
+ | B073372KDR | 11               | 0.413191       | 33 in Men's Jeans                   | 33                       |
+ | B00QNAL9U6 | 11               | 0.237614       | 4 in Men's Casual Pants             | 554                      |
+ | B00XKYM2AE | 11               | 0.271329       | 6 in Men's Cargo Shorts             | 6                        |
+ | B07848QFW3 | 11               | 0.204177       | 39 in Men's Casual Pants            | 39                       |
+ | B078LC7GCX | 11               | 0.408584       | 16 in Men's T-Shirts                | 395                      |
+ | B07BJKWX4Y | 11               | 0.314369       | 16 in Men's Jeans                   | 229                      |
+ | B07BN24BLX | 11               | 0.441690       | 13 in Men's Polo Shirts             | 13                       |
+ | B08JM661K7 | 11               | 0.331260       | 3 in Men's Dress Pants              | 926                      |
+ | B07JBRGFH4 | 11               | 0.237910       | 2 in Men's T-Shirts                 | 6                        |
+ | B002GHC19I | 11               | 0.339767       | 1 in Men's Work Utility & Safety    | 18                       |
+ | B08SM3CDLN | 11               | 0.327409       | 2 in Men's Activewear Polos         | 521                      |
+ | B098KXZG2Z | 11               | 0.325076       | 85 in Men's Jeans                   | 85                       |
+ | B09JYPMWP2 | 11               | 0.340515       | 71 in Men's Jeans                   | 71                       |
+ +----------+------------------+----------------+--------------------------------------+--------------------------+*/
+```
+
 #### 4. ¿Cuándo fue el último review de un producto y cuantos días han pasado desde la fecha a la actualidad?
 ```bash
 CREATE VIEW fecha_formateada 
