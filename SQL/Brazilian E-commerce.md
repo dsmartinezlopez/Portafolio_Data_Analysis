@@ -48,7 +48,7 @@ cte_3 AS(
 		SUM(CASE WHEN retardo = cumplió THEN 1 END) AS pedidos_semiincumplidos
 	FROM cte_2
 	GROUP BY orden_id, contador_orders, retardo, cumplió
-)
+) -- este cte_3 es para diferenciar aquellas órdenes que contenían varios productos donde en alguno de ellos hubo un retardo, por eso se descuentan de los que cumplieron en su totalidad
 SELECT 
 	COUNT(contador_orders) AS total_pedidos_enviados,
 	SUM(cumplió)-SUM(pedidos_semiincumplidos) AS pedidos_que_cumplieron,
