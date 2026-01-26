@@ -296,6 +296,9 @@ ORDER BY contador_reviews DESC
 ```
 
 #### 4. ¿Cuándo fue el último review de un producto y cuantos días han pasado desde la fecha a la actualidad?
+
+Se crea una vista para agrupar columnas que están separadas y darle formato de fecha en formato 'dd-MMM-yyyy'.
+
 ```bash
 CREATE VIEW fecha_formateada 
 AS
@@ -321,8 +324,11 @@ FROM(
 	FROM Reviews
 ) AS formato
 
--- fecha review último producto y días de diferencia a hoy
 
+```
+Luego de crear la vista con las fechas formateadas, se procede a consultar la fecha de revisión del último producto y días de diferencia a hoy.
+
+```bash
 SELECT
 	último_review,
 	hoy,
@@ -336,6 +342,17 @@ FROM(
 	AND fecha_review IS NOT NULL
 ) AS fechas
 ```
+
+#### Resultado
+
+```bash
+/*---------------+------------+---------------------+
+| último_review  | hoy        | días_de_diferencia  |
++----------------+------------+---------------------+
+| 2025-03-09     | 2026-01-26 | 323                 |
++----------------+------------+---------------------+*/
+```
+
 #### 5. ¿Cuántas reviews por día de la semana de cada mes y año tuvo el producto que más se comercializó en EE.UU?
 ```bash
 SET DATEFIRST 7
@@ -387,4 +404,9 @@ PIVOT
 ) AS pvt 
 
 ORDER BY YearReview ASC
+```
+
+#### Resultado
+
+```bash
 ```
