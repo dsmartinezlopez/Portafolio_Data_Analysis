@@ -58,7 +58,11 @@ FROM cte_3
 
 #### Resultado:
 
-![Salida](Captura de pantalla 2026-01-26 132033.png)
++--------------------------+--------------------------+--------------------------+
+| total_pedidos_enviados   | pedidos_que_cumplieron   | pedidos_retrasados       |
++--------------------------+--------------------------+--------------------------+
+| 96470                    | 19823                    | 76647                    |
++--------------------------+--------------------------+--------------------------+
 
 #### 2. ¿Cuál es el GAP de incumplimiento de entregas comparando MoM (Month-over-Month) de cada año?
 
