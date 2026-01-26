@@ -363,10 +363,11 @@ SELECT
 	rating_count AS multiplicador
 FROM Products
 ORDER BY multiplicador DESC
+```
 
 --El producto que tuvo más calificaciones por parte de los clientes fue el B0B1WMKNM5
 
-
+```bash
 WITH cte_fechas AS(
 	SELECT 
 		reviewID,
@@ -409,4 +410,13 @@ ORDER BY YearReview ASC
 #### Resultado
 
 ```bash
+/*------------+-------------+-------+--------+-----------+--------+---------+--------+---------+
+ | YearReview | MonthReview | Lunes | Martes | Miércoles | Jueves | Viernes | Sábado | Domingo |
+ +------------+-------------+-------+--------+-----------+--------+---------+--------+---------+
+ | 2021       | August      | 0     | 0      | 0         | 0      | 1       | 0      | 0       |
+ | 2024       | December    | 0     | 0      | 0         | 1      | 0       | 0      | 0       |
+ | 2024       | October     | 2     | 0      | 0         | 0      | 0       | 1      | 0       |
+ | 2025       | February    | 0     | 0      | 0         | 1      | 0       | 0      | 0       |
+ | 2025       | March       | 0     | 0      | 0         | 0      | 0       | 0      | 1       |
+ +------------+-------------+-------+--------+-----------+--------+---------+--------+---------+*/
 ```
