@@ -150,6 +150,13 @@ FROM(
 ORDER BY año, mes_numerico 
 ```
 
+#### Resultado:
+
+```bash
+
+```
+
+
 #### 3. Si la clasificación de los productos se establece de acuerdo al peso, donde SMALL se denomina todo lo que pese <= 1000 gramos, MEDIUM todo lo que pese > 1000 gramos y <= 10000 gramos, y BIG todo lo que pese > 10000 gramos ¿cuales fueron las clasificaciones que más porcentaje de incumplimiento tuvieron ordenadas de forma descendente?
 
 ```bash
