@@ -354,6 +354,9 @@ FROM(
 ```
 
 #### 5. ¿Cuántas reviews por día de la semana de cada mes y año tuvo el producto que más se comercializó en EE.UU?
+
+Primeramente calculamos cuál fue el producto que más se comercializó en EE.UU basándonos en el producto que más calificaciones recibió. 
+
 ```bash
 SET DATEFIRST 7
 
@@ -365,7 +368,7 @@ FROM Products
 ORDER BY multiplicador DESC
 ```
 
---El producto que tuvo más calificaciones por parte de los clientes fue el B0B1WMKNM5
+Luego de ejecutar la query anterior, el producto que tuvo más calificaciones por parte de los clientes fue el B0B1WMKNM5.
 
 ```bash
 WITH cte_fechas AS(
