@@ -188,7 +188,17 @@ ORDER BY año, mes_numerico
 ```bash
 ```
 
+#### Resultado
+
+```bash
+```
+
 #### 4. ¿Cuál fue el TOP 5 de órdenes_id enviadas que más se demoraron en completarse? muestre id de la orden, producto(s), ciudad origen (vendedor), ciudad destino (comprador) y cantidad de días transcurridos desde la fecha de compra y la fecha de entrega. 
+
+```bash
+```
+
+#### Resultado
 
 ```bash
 ```
@@ -204,7 +214,17 @@ ORDER BY año, mes_numerico
 ```bash
 ```
 
+#### Resultado
+
+```bash
+```
+
 #### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
+
+```bash
+```
+
+#### Resultado
 
 ```bash
 ```
@@ -216,6 +236,11 @@ ORDER BY año, mes_numerico
 ```bash
 ```
 
+#### Resultado
+
+```bash
+```
+
 ### Flujo de caja
 
 #### 1. ¿Con qué medio de pago se registró la compra más alta que se pagó de contado y en qué fecha se ejecutó la compra? 
@@ -223,7 +248,17 @@ ORDER BY año, mes_numerico
 ```bash
 ```
 
+#### Resultado
+
+```bash
+```
+
 #### 2. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
+
+```bash
+```
+
+#### Resultado
 
 ```bash
 ```
