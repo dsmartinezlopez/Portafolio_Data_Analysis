@@ -283,6 +283,11 @@ ORDER BY dias_diferencia DESC
 
 <img width="1609" height="410" alt="image" src="https://github.com/user-attachments/assets/4e004553-6f82-47dc-a3d3-fa6fa2851900" />
 
+<img width="795" height="752" alt="image" src="https://github.com/user-attachments/assets/0b690c5c-183e-48ca-877d-7839720454af" />
+
+Query optimizada: 
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Análisis con visión de negocio/revenue
