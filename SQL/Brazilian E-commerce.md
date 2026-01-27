@@ -281,9 +281,14 @@ ORDER BY dias_diferencia DESC
 
 ```
 
+**¿Se puede optimizar la consulta?**
+
+Para la ejecución de esta consulta se requirieron datos de 5 tablas diferentes, lo cual demoró más de lo normal en el proceso de mostrar los resultados. A cuntinuación una imagen que resume el plan de ejecución de la consulta con su respectivo costo en cada paso que se le dijo que hiciera en el código. 
+
+
 <img width="1609" height="410" alt="image" src="https://github.com/user-attachments/assets/4e004553-6f82-47dc-a3d3-fa6fa2851900" />
 
-<img width="795" height="752" alt="image" src="https://github.com/user-attachments/assets/0b690c5c-183e-48ca-877d-7839720454af" />
+
 
 Query optimizada: 
 
