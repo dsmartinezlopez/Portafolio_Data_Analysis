@@ -53,7 +53,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   ![Schema2](schema_sql_project_2.png)
 
   
-  **Skills:** CTE recursive query's, temporal view's, JOIN's, window functions
+  **Skills:** Data Importation, Data Manipulation, CTE recursive query's, temporal view's, JOINS, window functions
   
   **Technology:** `MS SQL Server`, `T-SQL`, `Tableau`
 
