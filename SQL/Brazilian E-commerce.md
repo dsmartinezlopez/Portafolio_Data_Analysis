@@ -303,6 +303,11 @@ CREATE NONCLUSTERED INDEX IDX_order_deliver
 ON [dbo].[Orders$] ([order_status],[order_delivered_customer_date])
 
 ```
+Luego de la creación de estos índices, el plan de ejecución de la consulta redujo un 47% su costo de procesamiento y por ende el tiempo de ejecución. 
+
+
+<img width="1598" height="485" alt="image" src="https://github.com/user-attachments/assets/da8e45aa-0553-4171-bf5b-af62c5c28d50" />
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
