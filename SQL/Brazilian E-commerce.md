@@ -186,11 +186,43 @@ ORDER BY año, mes_numerico
 #### 3. Si la clasificación de los productos se establece de acuerdo al peso, donde SMALL se denomina todo lo que pese <= 1000 gramos, MEDIUM todo lo que pese > 1000 gramos y <= 10000 gramos, y BIG todo lo que pese > 10000 gramos ¿cuales fueron las clasificaciones que más porcentaje de incumplimiento tuvieron ordenadas de forma descendente?
 
 ```bash
+SELECT
+	clasificación,
+	SUM(enviados) AS pedidos_enviados,
+	SUM(pedidos_retrasados) AS pedidos_retrasados,
+	FORMAT(SUM(pedidos_retrasados)*1.0/SUM(enviados)*1.0, 'P2') AS porcentaje
+FROM(
+SELECT
+	CASE 
+		WHEN A.product_weight_g <= 1000 THEN 'SMALL'
+		WHEN A.product_weight_g > 1000 AND A.product_weight_g <= 10000 THEN 'MEDIUM'
+		WHEN A.product_weight_g > 10000 THEN 'BIG'
+	END AS clasificación,
+	C.total_pedidos_enviados AS enviados,
+	C.pedidos_retrasados AS pedidos_retrasados
+FROM Products$ A
+INNER JOIN ['Orders items$'] B
+ON A.product_id = B.product_id
+INNER JOIN vista_fulfillment_rate C
+ON B.order_id = C.orden_id
+
+) AS subquery
+WHERE 1=1
+AND clasificación IS NOT NULL
+GROUP BY clasificación
+ORDER BY porcentaje DESC
 ```
 
 #### Resultado
 
 ```bash
+/*-------------+------------------+--------------------+------------+
+|clasificación | pedidos_enviados | pedidos_retrasados | porcentaje |
++--------------+------------------+--------------------+------------+
+| MEDIUM       | 38542            | 31702              | 82.25%     |
+| BIG          | 5155             | 4215               | 81.77%     |
+| SMALL        | 66474            | 51403              | 77.33%     |
++--------------+------------------+--------------------+------------+*/
 ```
 
 #### 4. ¿Cuál fue el TOP 5 de órdenes_id enviadas que más se demoraron en completarse? muestre id de la orden, producto(s), ciudad origen (vendedor), ciudad destino (comprador) y cantidad de días transcurridos desde la fecha de compra y la fecha de entrega. 
