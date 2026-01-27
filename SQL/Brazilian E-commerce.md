@@ -292,8 +292,17 @@ Para la ejecución de esta consulta se requirieron datos de 5 tablas diferentes,
 Para optimizar esta consulta y hacer que el código se ejecute más rápido y con menos recursos se crearon los siguientes índices (no agrupados) sobre algunas columnas requeridas en la consulta. 
 
 > [!TIP]
-> Un índice funciona como una tabla de contenido en un libro, es decir que el objetivo es que si quieres un capítulo puntual, no inspecciones todos los capítulos sino solamente el que quieres obtener. 
+> Un índice funciona como una tabla de contenido en un libro, es decir que el objetivo es que si quieres un capítulo puntual, no inspecciones todos los capítulos sino solamente el que quieres obtener.
 
+```bash
+
+CREATE NONCLUSTERED INDEX IDX_orders
+ON [dbo].['Orders items$'] ([order_id])
+
+CREATE NONCLUSTERED INDEX IDX_order_deliver
+ON [dbo].[Orders$] ([order_status],[order_delivered_customer_date])
+
+```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
