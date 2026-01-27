@@ -281,6 +281,8 @@ ORDER BY dias_diferencia DESC
 
 ```
 
+<img width="1609" height="410" alt="image" src="https://github.com/user-attachments/assets/4e004553-6f82-47dc-a3d3-fa6fa2851900" />
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Análisis con visión de negocio/revenue
