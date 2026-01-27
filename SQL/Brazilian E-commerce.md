@@ -225,14 +225,60 @@ ORDER BY porcentaje DESC
 +--------------+------------------+--------------------+------------+*/
 ```
 
-#### 4. ¿Cuál fue el TOP 5 de órdenes_id enviadas que más se demoraron en completarse? muestre id de la orden, producto(s), ciudad origen (vendedor), ciudad destino (comprador) y cantidad de días transcurridos desde la fecha de compra y la fecha de entrega. 
+#### 4. ¿Cuál fue el TOP 20 de órdenes_id enviadas que más se demoraron en completarse? muestre id de la orden, producto(s), ciudad origen (vendedor), ciudad destino (comprador) y cantidad de días transcurridos desde la fecha de compra y la fecha de entrega. 
 
 ```bash
+SELECT TOP 20 * FROM (
+SELECT
+	A.orden_id,
+	B.product_id,
+	C.seller_city AS ciudad_origen,
+	E.customer_city AS ciudad_destino,
+	D.order_purchase_timestamp AS fecha_compra,
+	D.order_delivered_customer_date AS fecha_envío,
+	DATEDIFF(DAY,D.order_purchase_timestamp,D.order_delivered_customer_date) AS dias_diferencia
+FROM vista_fulfillment_rate A
+LEFT JOIN ['Orders items$'] B
+ON A.orden_id = B.order_id
+LEFT JOIN Sellers$ C
+ON B.seller_id = C.seller_id
+LEFT JOIN Orders$ D
+ON A.orden_id = D.order_id
+LEFT JOIN Customers$ E
+ON D.customer_id = E.customer_id
+
+) AS sub_consulta
+ORDER BY dias_diferencia DESC
 ```
 
 #### Resultado
 
 ```bash
+/*--------------------------------+--------------------------------+---------------------+----------------------+-------------------------+-------------------------+------------------+
+| orden_id                        | product_id                     | ciudad_origen       | ciudad_destino       | fecha_compra            | fecha_envío             | dias_diferencia  |
++--------------------------------+--------------------------------+---------------------+----------------------+-------------------------+-------------------------+------------------+
+| ca07593549f1816d26a572e06dc1eab6 | 8eed5d27f5b8c6248731efb4782f6141 | belo horizonte      | montanha             | 2017-02-21 23:31:27.000 | 2017-09-19 14:36:39.000 | 210              |
+| 1b3190b2dfa9d789e1f14c05b647a14a | ee406bf28024d97771c4b1e8b7e8e219 | sao paulo           | rio de janeiro       | 2018-02-23 14:57:35.000 | 2018-09-19 23:24:07.000 | 208              |
+| 440d0d17af552815d15a9e41abe49359 | 3bec03860f3782ef8993056e01b8229a | belo horizonte      | belem                | 2017-03-07 23:59:51.000 | 2017-09-19 15:12:50.000 | 196              |
+| 2fb597c2f772eca01b1f5c561bf6cc7b | 8ed094bfe076c568f6bb10feada3f75d | itaquaquecetuba     | teresina             | 2017-03-08 18:09:02.000 | 2017-09-19 14:33:17.000 | 195              |
+| 285ab9426d6982034523a855f55a885e | 0c6fc9b9317a68d1cda098c063914b72 | uberaba             | lagarto              | 2017-03-08 22:47:40.000 | 2017-09-19 14:00:04.000 | 195              |
+| 0f4519c5f1c541ddec9f21b3bddd533a | e0d64dcfaa3b6db5c54ca298ae101d05 | barueri             | teresina             | 2017-03-09 13:26:57.000 | 2017-09-19 14:38:21.000 | 194              |
+| 47b40429ed8cce3aee9199792275433f | ebf1c13032246ea801765e8cb5417365 | sao paulo           | salto                | 2018-01-03 09:44:01.000 | 2018-07-13 20:51:31.000 | 191              |
+| 2fe324febf907e3ea3f2aa9650869fa5 | b75683e29689c1a989ae97883e8cad56 | farroupilha         | paulinia             | 2017-03-13 20:17:10.000 | 2017-09-19 17:00:07.000 | 190              |
+| c27815f7e3dd0b926b58552628481575 | 05e8eca656b87428a0e8453a2f335cdf | itajobi             | perdizes             | 2017-03-15 23:23:17.000 | 2017-09-19 17:14:25.000 | 188              |
+| 2d7561026d542c8dbd8f0daeadf67a43 | 7594c5fa74bceda1c2540003533a6e02 | aracatuba           | aracaju              | 2017-03-15 11:24:27.000 | 2017-09-19 14:38:18.000 | 188              |
+| 437222e3fd1b07396f1d9ba8c15fba59 | f82a4b08cf7b2bf375fb77e519231f9a | ibitinga            | macapa               | 2017-03-16 11:36:00.000 | 2017-09-19 16:28:58.000 | 187              |
+| 437222e3fd1b07396f1d9ba8c15fba59 | 5215eef690e61a0c178ed552e6e2d06a | ibitinga            | macapa               | 2017-03-16 11:36:00.000 | 2017-09-19 16:28:58.000 | 187              |
+| dfe5f68118c2576143240b8d78e5940a | aba86c093ccdbac75b09111d57e50004 | itaquaquecetuba     | teutonia             | 2017-03-17 12:32:22.000 | 2017-09-19 18:13:19.000 | 186              |
+| 6e82dcfb5eada6283dba34f164e636f5 | 3ce943997ff85cad84ec6770b35d6bcd | sao jose dos campos | santa maria          | 2017-05-17 19:09:02.000 | 2017-11-16 10:56:45.000 | 183              |
+| 6e82dcfb5eada6283dba34f164e636f5 | b7d94dc0640c7025dc8e3b46b52d8239 | sao jose dos campos | santa maria          | 2017-05-17 19:09:02.000 | 2017-11-16 10:56:45.000 | 183              |
+| 2ba1366baecad3c3536f27546d129017 | e4176515d2055eb7771645c597f8b40c | sao jose dos campos | formosa              | 2017-02-28 14:56:37.000 | 2017-08-28 16:23:46.000 | 181              |
+| d24e8541128cea179a11a65176e0a96f | a224196b0b605fdffac1d9224f052ceb | indaiatuba          | sao bernardo do campo| 2017-06-12 13:14:11.000 | 2017-12-04 18:36:29.000 | 175              |
+| d24e8541128cea179a11a65176e0a96f | 4f687412e6805c3cfc9e0c5ec2f841e0 | indaiatuba          | sao bernardo do campo| 2017-06-12 13:14:11.000 | 2017-12-04 18:36:29.000 | 175              |
+| 3566eabb132f8d64741ae7b921bbd10e | 35afc973633aaeb6b877ff57b2793310 | ibitinga            | currais novos        | 2017-03-29 13:57:55.000 | 2017-09-19 15:07:09.000 | 174              |
+| ed8e9faf1b75f43ee027103957135663 | bdeb69e094c42de582310fffad126d77 | bebedouro           | jacarei              | 2017-11-29 15:10:14.000 | 2018-05-21 18:22:18.000 | 173              |
++--------------------------------+--------------------------------+---------------------+----------------------+-------------------------+-------------------------+------------------+*/
+
 ```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
