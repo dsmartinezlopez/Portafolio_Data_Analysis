@@ -295,18 +295,25 @@ Para optimizar esta consulta y hacer que el código se ejecute más rápido y co
 > Un índice funciona como una tabla de contenido en un libro, es decir que el objetivo es que si quieres un capítulo puntual, no inspecciones todos los capítulos sino solamente el que quieres obtener.
 
 ```bash
+CREATE NONCLUSTERED INDEX IDX_order
+ON [dbo].['Orders items$'] ([order_id],[seller_id])
 
-CREATE NONCLUSTERED INDEX IDX_orders
-ON [dbo].['Orders items$'] ([order_id])
 
-CREATE NONCLUSTERED INDEX IDX_order_deliver
-ON [dbo].[Orders$] ([order_status],[order_delivered_customer_date])
+CREATE NONCLUSTERED INDEX IDX_seller
+ON [dbo].[Sellers$] ([seller_id])
 
+
+CREATE NONCLUSTERED INDEX IDX_customer
+ON [dbo].[Customers$] ([customer_id])
+
+
+CREATE NONCLUSTERED INDEX IDX_order_delivered
+ON [dbo].[Orders$] ([order_status],[order_delivered_customer_date],[order_purchase_timestamp])
 ```
-Luego de la creación de estos índices, **el plan de ejecución de la consulta redujo un 47% su costo de procesamiento y por ende el tiempo de ejecución.** 
+Luego de la creación de estos índices, **el plan de ejecución de la consulta redujo un 49% su tiempo de ejecución.** 
 
 
-<img width="1598" height="485" alt="image" src="https://github.com/user-attachments/assets/da8e45aa-0553-4171-bf5b-af62c5c28d50" />
+<img width="1874" height="512" alt="image" src="https://github.com/user-attachments/assets/afef21eb-84ad-4b7f-840c-1f40e1bf0b04" />
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
