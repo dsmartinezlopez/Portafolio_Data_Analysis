@@ -391,14 +391,176 @@ ORDER BY fecha_truncada ASC;
 
 ```
 
-#### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
+#### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición para cada medio de pago por estado/provincia en orden descendente por medio de pago. Haga la comparativa de rendimiento de la consulta utilizando CTE's y subqueries, ¿cuál es la mejor y por qué?
+
+Usando Subqueries 
 
 ```bash
+SELECT
+	estado,
+	medio_pago,
+	SUM(total_pagos) OVER (PARTITION BY medio_pago ORDER BY SUM(total_pagos) DESC) AS monto_total
+	--FORMAT(SUM(total_pagos) OVER (PARTITION BY medio_pago ORDER BY SUM(total_pagos) DESC),'C', 'en-US') AS monto_total
+FROM (
+	SELECT 
+		A.customer_state AS estado,
+		C.payment_type AS medio_pago,
+		SUM(TRY_CAST(C.payment_value AS NUMERIC)) AS total_pagos
+	FROM Customers$ A
+	LEFT JOIN Orders$ B
+	ON A.customer_id = B.customer_id
+	LEFT JOIN Payments$ C
+	ON B.order_id = C.order_id
+	WHERE 1=1
+	AND C.payment_type IS NOT NULL
+	AND C.payment_type != 'not_defined'
+GROUP BY A.customer_state, C.payment_type
+) AS subconsulta
+GROUP BY estado, medio_pago, total_pagos
+ORDER BY medio_pago, monto_total DESC;
+
+```
+
+Usando CTE's
+
+```bash
+WITH cte_1 AS(
+	SELECT 
+		A.customer_state AS estado,
+		C.payment_type AS medio_pago,
+		SUM(TRY_CAST(C.payment_value AS NUMERIC)) AS total_pagos
+	FROM Customers$ A
+	LEFT JOIN Orders$ B
+	ON A.customer_id = B.customer_id
+	LEFT JOIN Payments$ C
+	ON B.order_id = C.order_id
+	WHERE 1=1
+	AND C.payment_type IS NOT NULL
+	AND C.payment_type != 'not_defined'
+	GROUP BY A.customer_state, C.payment_type
+)
+SELECT
+	estado,
+	medio_pago,
+	SUM(total_pagos) OVER (PARTITION BY medio_pago ORDER BY SUM(total_pagos) DESC) AS monto_total
+FROM cte_1
+GROUP BY estado, medio_pago, total_pagos
+ORDER BY medio_pago, monto_total DESC;
 ```
 
 #### Resultado
 
 ```bash
+/*--------+-------------+------------+
+| estado | medio_pago  | monto_total |
++--------+-------------+------------+
+| RR     | boleto      | 2869601    |
+| AP     | boleto      | 2866861    |
+| AC     | boleto      | 2863035    |
+| AM     | boleto      | 2859127    |
+| TO     | boleto      | 2854677    |
+| AL     | boleto      | 2841389    |
+| SE     | boleto      | 2827646    |
+| RO     | boleto      | 2813053    |
+| RN     | boleto      | 2798244    |
+| PI     | boleto      | 2781776    |
+| PB     | boleto      | 2764352    |
+| MS     | boleto      | 2737923    |
+| MT     | boleto      | 2710326    |
+| CE     | boleto      | 2671443    |
+| MA     | boleto      | 2631705    |
+| PA     | boleto      | 2591017    |
+| PE     | boleto      | 2546572    |
+| DF     | boleto      | 2498670    |
+| ES     | boleto      | 2445752    |
+| GO     | boleto      | 2380176    |
+| BA     | boleto      | 2311228    |
+| SC     | boleto      | 2216193    |
+| PR     | boleto      | 2101882    |
+| RS     | boleto      | 1946246    |
+| RJ     | boleto      | 1753926    |
+| MG     | boleto      | 1425313    |
+| SP     | boleto      | 1084822    |
+| RR     | credit_card | 12542823   |
+| AP     | credit_card | 12535499   |
+| AC     | credit_card | 12523303   |
+| AM     | credit_card | 12508685   |
+| RO     | credit_card | 12485534   |
+| TO     | credit_card | 12442218   |
+| SE     | credit_card | 12396350   |
+| AL     | credit_card | 12340059   |
+| RN     | credit_card | 12259773   |
+| PI     | credit_card | 12178336   |
+| MS     | credit_card | 12090798   |
+| PB     | credit_card | 11984238   |
+| MA     | credit_card | 11877197   |
+| MT     | credit_card | 11768133   |
+| PA     | credit_card | 11623149   |
+| CE     | credit_card | 11456934   |
+| ES     | credit_card | 11227844   |
+| PE     | credit_card | 10978701   |
+| GO     | credit_card | 10711035   |
+| DF     | credit_card | 10441425   |
+| SC     | credit_card | 10149464   |
+| BA     | credit_card | 9667649    |
+| PR     | credit_card | 9168671    |
+| RS     | credit_card | 8542086    |
+| MG     | credit_card | 7879571    |
+| RJ     | credit_card | 6407630    |
+| SP     | credit_card | 4677265    |
+| AM     | debit_card  | 218013     |
+| AC     | debit_card  | 217861     |
+| MA     | debit_card  | 217511     |
+| RO     | debit_card  | 217101     |
+| MT     | debit_card  | 216349     |
+| TO     | debit_card  | 215510     |
+| AL     | debit_card  | 214613     |
+| PI     | debit_card  | 213388     |
+| MS     | debit_card  | 212156     |
+| RN     | debit_card  | 210662     |
+| SE     | debit_card  | 209164     |
+| DF     | debit_card  | 207547     |
+| PE     | debit_card  | 205885     |
+| CE     | debit_card  | 203007     |
+| PA     | debit_card  | 199936     |
+| GO     | debit_card  | 196537     |
+| ES     | debit_card  | 193008     |
+| PB     | debit_card  | 188409     |
+| BA     | debit_card  | 182983     |
+| SC     | debit_card  | 175928     |
+| PR     | debit_card  | 168329     |
+| RS     | debit_card  | 157786     |
+| MG     | debit_card  | 143327     |
+| RJ     | debit_card  | 121094     |
+| SP     | debit_card  | 88670      |
+| AM     | voucher     | 379408     |
+| AP     | voucher     | 379197     |
+| AC     | voucher     | 378960     |
+| TO     | voucher     | 378162     |
+| AL     | voucher     | 376723     |
+| MS     | voucher     | 375017     |
+| RO     | voucher     | 373138     |
+| PI     | voucher     | 371151     |
+| MT     | voucher     | 368820     |
+| MA     | voucher     | 366475     |
+| PB     | voucher     | 364120     |
+| SE     | voucher     | 361470     |
+| RN     | voucher     | 358719     |
+| PA     | voucher     | 355410     |
+| PE     | voucher     | 351127     |
+| ES     | voucher     | 344642     |
+| CE     | voucher     | 337987     |
+| GO     | voucher     | 330369     |
+| DF     | voucher     | 322386     |
+| BA     | voucher     | 313783     |
+| PR     | voucher     | 298125     |
+| SC     | voucher     | 279757     |
+| RS     | voucher     | 260367     |
+| MG     | voucher     | 238811     |
+| RJ     | voucher     | 201282     |
+| SP     | voucher     | 148297     |
++--------+-------------+------------+*/
+
 ```
 
 ### Utilidades
