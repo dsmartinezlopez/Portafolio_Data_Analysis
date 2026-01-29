@@ -325,11 +325,70 @@ Luego de la creación de estos índices, **el plan de ejecución de la consulta 
 #### 1. ¿Cuál fue la suma del total de pagos que se cerró al primer día de cada mes? muestre el total acumulado de los pagos MoM (Month-over-Month)
 
 ```bash
+WITH cte_1 AS (
+    SELECT
+        B.order_approved_at AS fecha_de_pago,
+        TRY_CAST(A.payment_value AS numeric) AS conversion
+    FROM Payments$ A
+    LEFT JOIN Orders$ B ON A.order_id = B.order_id
+),
+cte_2 AS (
+    SELECT
+        fecha_de_pago,
+        DATETRUNC(MONTH, fecha_de_pago) AS fecha_truncada,
+        conversion
+    FROM cte_1
+),
+cte_3 AS (
+    SELECT
+        fecha_truncada,
+        SUM(conversion) AS total_pagos_numerico
+    FROM cte_2
+    WHERE fecha_truncada IS NOT NULL
+    GROUP BY fecha_truncada
+)
+SELECT 
+    fecha_truncada,
+    FORMAT(total_pagos_numerico, 'C', 'en-US') AS total_pagos_mes,
+    FORMAT(
+        SUM(total_pagos_numerico) OVER (ORDER BY fecha_truncada ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),
+        'C', 'en-US'
+    ) AS total_pagos_acumulado_por_mes
+FROM cte_3
+ORDER BY fecha_truncada ASC;
 ```
 
 #### Resultado
 
 ```bash
+/*-------------------------+------------------+----------------------------------+
+ | fecha_truncada          | total_pagos_mes  | total_pagos_acumulado_por_mes    |
+ +-------------------------+------------------+----------------------------------+
+ | 2016-10-01 00:00:00.000 | $58,378.00       | $58,378.00                       |
+ | 2016-12-01 00:00:00.000 | $20.00           | $58,398.00                       |
+ | 2017-01-01 00:00:00.000 | $131,871.00      | $190,269.00                      |
+ | 2017-02-01 00:00:00.000 | $291,875.00      | $482,144.00                      |
+ | 2017-03-01 00:00:00.000 | $446,126.00      | $928,270.00                      |
+ | 2017-04-01 00:00:00.000 | $413,607.00      | $1,341,877.00                    |
+ | 2017-05-01 00:00:00.000 | $593,191.00      | $1,935,068.00                    |
+ | 2017-06-01 00:00:00.000 | $515,389.00      | $2,450,457.00                    |
+ | 2017-07-01 00:00:00.000 | $585,338.00      | $3,035,795.00                    |
+ | 2017-08-01 00:00:00.000 | $672,900.00      | $3,708,695.00                    |
+ | 2017-09-01 00:00:00.000 | $717,963.00      | $4,426,658.00                    |
+ | 2017-10-01 00:00:00.000 | $783,021.00      | $5,209,679.00                    |
+ | 2017-11-01 00:00:00.000 | $1,175,088.00    | $6,384,767.00                    |
+ | 2017-12-01 00:00:00.000 | $902,617.00      | $7,287,384.00                    |
+ | 2018-01-01 00:00:00.000 | $1,106,268.00    | $8,393,652.00                    |
+ | 2018-02-01 00:00:00.000 | $984,601.00      | $9,378,253.00                    |
+ | 2018-03-01 00:00:00.000 | $1,170,322.00    | $10,548,575.00                   |
+ | 2018-04-01 00:00:00.000 | $1,137,568.00    | $11,686,143.00                   |
+ | 2018-05-01 00:00:00.000 | $1,180,079.00    | $12,866,222.00                   |
+ | 2018-06-01 00:00:00.000 | $1,027,913.00    | $13,894,135.00                   |
+ | 2018-07-01 00:00:00.000 | $1,043,078.00    | $14,937,213.00                   |
+ | 2018-08-01 00:00:00.000 | $1,035,332.00    | $15,972,545.00                   |
+ | 2018-09-01 00:00:00.000 | $166.00          | $15,972,711.00                   |
+ +-------------------------+------------------+----------------------------------+*/
+
 ```
 
 #### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición porcentual para cada medio de pago por estado/provincia
