@@ -451,8 +451,8 @@ ORDER BY medio_pago, monto_total DESC;
 #### Resultado
 
 ```bash
-/*--------+-------------+------------+
-| estado | medio_pago  | monto_total |
+/*-------+-------------+------------+
+| estado | medio_pago  | monto_total|
 +--------+-------------+------------+
 | RR     | boleto      | 2869601    |
 | AP     | boleto      | 2866861    |
