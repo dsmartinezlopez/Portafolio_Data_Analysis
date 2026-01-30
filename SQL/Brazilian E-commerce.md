@@ -391,25 +391,69 @@ ORDER BY fecha_truncada ASC;
 
 ```
 
-#### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre la composición para cada medio de pago por estado/provincia en orden descendente por medio de pago. Haga la comparativa de rendimiento de la consulta utilizando CTE's y subqueries, ¿cuál es la mejor y por qué?
+#### 2. ¿Cómo fue la distribución de los medios de pago para cada categoría de productos? muestre los primeros 5 estados para cada medio de pago por estado/provincia en orden descendente
 
-Usando Subqueries 
 
 ```bash
-
-
-```
-
-Usando CTE's
-
-```bash
-
+SELECT
+	estado,
+	medio_pago,
+	total_pagos
+FROM(
+	SELECT 
+		estado,
+		medio_pago,
+		total_pagos,
+		ROW_NUMBER() OVER(PARTITION BY medio_pago ORDER BY medio_pago, total_pagos DESC) AS ranking
+	FROM(
+	
+		SELECT 
+			A.customer_state AS estado,
+			C.payment_type AS medio_pago,
+			SUM(TRY_CAST(C.payment_value AS NUMERIC)) AS total_pagos
+		FROM Customers$ A
+		LEFT JOIN Orders$ B
+		ON A.customer_id = B.customer_id
+		LEFT JOIN Payments$ C
+		ON B.order_id = C.order_id
+		WHERE 1=1
+		AND C.payment_type IS NOT NULL
+		AND C.payment_type != 'not_defined'
+		GROUP BY A.customer_state, C.payment_type
+	) AS sub_consulta_1
+) AS sub_consulta_2
+WHERE
+1=1
+AND ranking < 6
 ```
 
 #### Resultado
 
 ```bash
-
+/*--------+-------------+-------------+
+ | estado | medio_pago  | total_pagos |
+ +--------+-------------+-------------+
+ | SP     | boleto      | 1084822     |
+ | MG     | boleto      | 340491      |
+ | RJ     | boleto      | 328613      |
+ | RS     | boleto      | 192320      |
+ | PR     | boleto      | 155636      |
+ | SP     | credit_card | 4677265     |
+ | RJ     | credit_card | 1730365     |
+ | MG     | credit_card | 1471941     |
+ | RS     | credit_card | 662515      |
+ | PR     | credit_card | 626585      |
+ | SP     | debit_card  | 88670       |
+ | RJ     | debit_card  | 32424       |
+ | MG     | debit_card  | 22233       |
+ | RS     | debit_card  | 14459       |
+ | PR     | debit_card  | 10543       |
+ | SP     | voucher     | 148297      |
+ | RJ     | voucher     | 52985       |
+ | MG     | voucher     | 37529       |
+ | RS     | voucher     | 21556       |
+ | SC     | voucher     | 19390       |
+ +--------+-------------+------------+*/
 ```
 
 ### Utilidades
