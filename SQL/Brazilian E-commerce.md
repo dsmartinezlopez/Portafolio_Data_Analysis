@@ -398,28 +398,35 @@ ORDER BY fecha_truncada ASC;
 SELECT
 	estado,
 	medio_pago,
-	total_pagos
+	categoría,
+	FORMAT(total_pagos,'C', 'en-US') AS monto_total
 FROM(
 	SELECT 
 		estado,
 		medio_pago,
 		total_pagos,
+		categoría,
 		ROW_NUMBER() OVER(PARTITION BY medio_pago ORDER BY medio_pago, total_pagos DESC) AS ranking
 	FROM(
-	
 		SELECT 
 			A.customer_state AS estado,
 			C.payment_type AS medio_pago,
+			E.product_category_name AS categoría,
 			SUM(TRY_CAST(C.payment_value AS NUMERIC)) AS total_pagos
 		FROM Customers$ A
 		LEFT JOIN Orders$ B
 		ON A.customer_id = B.customer_id
 		LEFT JOIN Payments$ C
 		ON B.order_id = C.order_id
+		LEFT JOIN ['Orders items$'] D
+		ON B.order_id = D.order_id
+		LEFT JOIN Products$ E
+		ON D.product_id = E.product_id
 		WHERE 1=1
 		AND C.payment_type IS NOT NULL
+		AND E.product_category_name IS NOT NULL
 		AND C.payment_type != 'not_defined'
-		GROUP BY A.customer_state, C.payment_type
+		GROUP BY A.customer_state, C.payment_type, E.product_category_name
 	) AS sub_consulta_1
 ) AS sub_consulta_2
 WHERE
@@ -430,30 +437,30 @@ AND ranking < 6
 #### Resultado
 
 ```bash
-/*--------+-------------+-------------+
- | estado | medio_pago  | total_pagos |
- +--------+-------------+-------------+
- | SP     | boleto      | 1084822     |
- | MG     | boleto      | 340491      |
- | RJ     | boleto      | 328613      |
- | RS     | boleto      | 192320      |
- | PR     | boleto      | 155636      |
- | SP     | credit_card | 4677265     |
- | RJ     | credit_card | 1730365     |
- | MG     | credit_card | 1471941     |
- | RS     | credit_card | 662515      |
- | PR     | credit_card | 626585      |
- | SP     | debit_card  | 88670       |
- | RJ     | debit_card  | 32424       |
- | MG     | debit_card  | 22233       |
- | RS     | debit_card  | 14459       |
- | PR     | debit_card  | 10543       |
- | SP     | voucher     | 148297      |
- | RJ     | voucher     | 52985       |
- | MG     | voucher     | 37529       |
- | RS     | voucher     | 21556       |
- | SC     | voucher     | 19390       |
- +--------+-------------+------------+*/
+/*-------+-------------+--------------------------+--------------+
+| estado | medio_pago  | categoría                | monto_total  |
++--------+-------------+--------------------------+--------------+
+| RJ     | debit_card  | relogios_presentes       | $14,069.00   |
+| SP     | debit_card  | cama_mesa_banho          | $12,521.00   |
+| SP     | debit_card  | utilidades_domesticas    | $9,653.00    |
+| SP     | debit_card  | beleza_saude             | $9,599.00    |
+| SP     | debit_card  | informatica_acessorios   | $8,079.00    |
+| SP     | voucher     | cama_mesa_banho          | $17,030.00   |
+| SP     | voucher     | utilidades_domesticas    | $15,108.00   |
+| SP     | voucher     | moveis_decoracao         | $14,137.00   |
+| SP     | voucher     | esporte_lazer            | $12,760.00   |
+| SP     | voucher     | beleza_saude             | $9,913.00    |
+| SP     | credit_card | cama_mesa_banho          | $610,180.00  |
+| SP     | credit_card | beleza_saude             | $495,201.00  |
+| SP     | credit_card | relogios_presentes       | $419,648.00  |
+| SP     | credit_card | moveis_decoracao         | $415,317.00  |
+| SP     | credit_card | esporte_lazer            | $400,034.00  |
+| SP     | boleto      | informatica_acessorios   | $229,275.00  |
+| SP     | boleto      | cama_mesa_banho          | $126,058.00  |
+| SP     | boleto      | moveis_decoracao         | $117,801.00  |
+| SP     | boleto      | esporte_lazer            | $104,571.00  |
+| SP     | boleto      | beleza_saude             | $101,444.00  |
++--------+-------------+--------------------------+--------------+*/
 ```
 
 ### Utilidades
