@@ -97,7 +97,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 -------------------------------------------------------------------------------------------------------------------------------------
 
 ### Python:
-  - Project 1: [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
+####  - **Project 1:** [Statistical analysis of Icfes Saber Pro results](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Proyecto%20Icfes.ipynb)
 
 > [!NOTE]
 > This is a continuation of Power BI Project 1: Dashboard Icfes Saber Pro; here, statistical analyses are performed to test hypotheses.
