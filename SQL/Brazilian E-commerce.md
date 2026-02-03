@@ -465,14 +465,91 @@ AND ranking < 6
 
 ### Utilidades
 
-#### 1. ¿Cuáles fueron el TOP 3 de ciudades por cada estado que más utilidades obtuvieron? 
+#### 1. Identificar compras recurrentes en intervalos de tiempo de 30 días y mostrar las utilidades que dejaron los 5 mejores clientes. ¿Qué clientes fueron y de donde fueron? 
 
 ```bash
+CREATE VIEW utilidadesV5 AS
+SELECT
+	A.customer_id AS cliente,
+	A.order_purchase_timestamp AS fecha_compra,
+	A.order_status,
+	B.order_id,
+	B.product_id,
+	COALESCE(SUM(TRY_CAST(B.price AS NUMERIC))*1.0 - SUM(TRY_CAST(B.freight_value AS NUMERIC))*1.0,0) AS utilidad
+FROM Orders$ A
+LEFT JOIN ['Orders items$'] B
+ON A.order_id = B.order_id
+GROUP BY A.customer_id, A.order_purchase_timestamp, A.order_status, B.order_id, B.product_id;
+```
+
+```bash
+CREATE VIEW CTE_recursivo AS
+WITH cte_recursivo AS(
+
+	SELECT
+		cliente,
+		fecha_compra,
+		order_status,
+		order_id,
+		product_id,
+		utilidad,
+		ROW_NUMBER() OVER(PARTITION BY cliente ORDER BY utilidad DESC) AS nivel_productos,
+		1 AS nivel_compra
+	FROM utilidadesV5
+	WHERE 1=1
+	AND DATEDIFF(DAY,DATEADD(MONTH,-1,fecha_compra),fecha_compra) < 30   -- Compras recurrentes en intervalos de 30 días antes
+
+	UNION ALL
+	
+	SELECT
+		A.cliente,
+		A.fecha_compra,
+		A.order_status,
+		A.order_id,
+		A.product_id,
+		A.utilidad,
+		B.nivel_productos,
+		B.nivel_compra + 1 AS nivel_compra
+
+	FROM utilidadesV5 A
+	INNER JOIN cte_recursivo B
+	ON A.cliente = b.cliente            -- Busca que sea el mismo cliente 
+	AND A.order_id > B.order_id         -- Pero diferente órden de compra para ejecutar el contador de "nivel_compra"
+
+)
+SELECT * FROM cte_recursivo
+WHERE 1=1
+AND order_status NOT IN ('unavailable', 'canceled')
+```
+
+
+```bash
+SELECT TOP 5 *
+FROM (
+	SELECT
+		A.cliente,
+		B.customer_city,
+		SUM(A.utilidad)  AS utilidad
+	FROM CTE_recursivo A
+	LEFT JOIN Customers$ B
+	ON A.cliente = B.customer_id
+	GROUP BY cliente, customer_city
+) AS subconsulta
+ORDER BY utilidad DESC
 ```
 
 #### Resultado
 
 ```bash
+/*----------------------------------+------------------------+----------+
+ | cliente                          | customer_city          | utilidad |
+ +----------------------------------+------------------------+----------+
+ | 35a413c7ca3c69756cb75867d6311c0d | bom jesus do galho     | 4025.0   |
+ | c6695e3b1e48680db36b487419fb0398 | sao paulo              | 3983.0   |
+ | 19b32919fa1198aefc0773ee2e46e693 | recife                 | 3607.0   |
+ | fd78e5e3abdc375368456fe738694c00 | monte alegre do sul    | 2976.0   |
+ | d7c94e22bfd332eb29b0f5badc3ce103 | varginha               | 2958.0   |
+ +----------------------------------+------------------------+----------+*/
 ```
 
 ### Flujo de caja
