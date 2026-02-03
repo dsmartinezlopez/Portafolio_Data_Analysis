@@ -1,4 +1,4 @@
-# About me
+ # About me
 
 Hi! 👋 I'm David, welcome to my Data Analytical portafolio. 
 
@@ -57,7 +57,8 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   **Technology:** `MS SQL Server`, `T-SQL`, `Tableau`
 
-  **Conclusion:**
+  **Conclusion:** The database allowed us to answer both operational and business questions, maintaining a necessary balance when analyzing data in e-commerce companies. Additionally, a dashboard was created that addressed these questions in the format typically used for management presentations.
+
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
