@@ -561,17 +561,71 @@ ORDER BY utilidad DESC
 
 ### Flujo de caja
 
-#### 1. ¿Con qué medio de pago se registró la compra más alta que se pagó de contado y en qué fecha se ejecutó la compra? 
+#### 1. ¿Con qué medio de pago se registró la compra más alta que se pagó de contado? ¿qué cliente la hizo y en qué fecha se ejecutó la compra? ¿cuánto dejó de utilidad esa compra?
 
 ```bash
+SELECT
+	TOP 1 *
+FROM(
+SELECT
+	A.payment_type,
+	B.customer_id,
+	B.order_purchase_timestamp,
+	MAX(A.payment_value) AS pago_máximo,
+	C.utilidad AS flujo_caja_máximo  
+FROM Payments$ A
+LEFT JOIN Orders$ B
+ON A.order_id = B.order_id
+LEFT JOIN utilidadesV5 C
+ON A.order_id = C.order_id
+WHERE 1=1
+AND payment_installments = 1	--compra que se pagó de contado o una sola vez 
+GROUP BY payment_type, customer_id, order_purchase_timestamp, utilidad
+) AS subconsulta
+ORDER BY pago_máximo DESC
 ```
 
 #### Resultado
 
 ```bash
+/*----------------+----------------------------------+--------------------------+-------------+-------------------+
+ | payment_type   | customer_id                      | order_purchase_timestamp | pago_máximo | flujo_caja_máximo |
+ +----------------+----------------------------------+--------------------------+-------------+-------------------+
+ | boleto         | 7ce1fc9e99a49468fd3ba1df06317ff3 | 2017-09-18 15:55:33.000  | 999.68      | 600.0             |
+ +----------------+----------------------------------+--------------------------+-------------+-------------------+*/
+```
+#### 2. ¿Cuál fue la compra a la que más cuotas se difirió un pago?
+
+```bash
+SELECT
+	TOP 1 *
+FROM(
+SELECT
+	A.payment_type,
+	B.customer_id,
+	B.order_purchase_timestamp,
+	A.payment_installments AS cuotas,
+	MAX(A.payment_value) AS pago
+FROM Payments$ A
+LEFT JOIN Orders$ B
+ON A.order_id = B.order_id
+WHERE 1=1
+AND payment_installments = (SELECT MAX(payment_installments) FROM Payments$)	--compra que se pagó en más cuotas
+GROUP BY payment_type, customer_id, order_purchase_timestamp, payment_installments
+) AS subconsulta
+ORDER BY pago DESC
+```
+#### Resultado
+
+```bash
+/*--------------+----------------------------------+--------------------------+-------+--------+
+ | payment_type | customer_id                      | order_purchase_timestamp | cuotas | pago   |
+ +--------------+----------------------------------+--------------------------+-------+--------+
+ | credit_card  | 7bb5a75d4a412872fa774b56e05d0c38 | 2017-11-27 20:01:56.000  | 24     | 771.69 |
+ +--------------+----------------------------------+--------------------------+-------+--------+*/
 ```
 
-#### 2. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
+#### 3. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
 
 ```bash
 ```
