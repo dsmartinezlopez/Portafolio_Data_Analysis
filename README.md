@@ -29,7 +29,7 @@ Attachs my [CV](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob
   
   ![Schema](schema_project_1.png)
   
-  **Skills:** Data Importation, Data Manipulation, JOINS, aggregation functions, category functions, date functions, CTE query's, sub-query's, windows functions, sub-query's. 
+  **Skills:** Data Importation, Data Manipulation, JOINS, aggregation functions, category functions, date functions, CTE query's, sub-query's, windows functions, sub-query's, PIVOT. 
   
   **Technology:** `MS SQL Server`, `T-SQL`
 
