@@ -625,13 +625,40 @@ ORDER BY pago DESC
  +--------------+----------------------------------+--------------------------+-------+--------+*/
 ```
 
-#### 3. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja obtuvieron de sus ventas? 
+#### 3. ¿Cuál fue el TOP 5 de vendedores que más flujo de caja inmediato obtuvieron de sus ventas y cuántas ventas realizaron?
 
 ```bash
+SELECT
+	TOP 5 *
+FROM(
+	SELECT
+		A.seller_id,
+		COALESCE(SUM(TRY_CAST(A.price AS NUMERIC))*1.0 - SUM(TRY_CAST(A.freight_value AS NUMERIC))*1.0,0) AS flujo_caja,
+		COUNT(B.order_id) AS cantidad_ventas
+	FROM ['Orders items$'] A
+	LEFT JOIN  Orders$ B
+	ON A.order_id = B.order_id
+	LEFT JOIN Payments$ C
+	ON B.order_id = C.order_id
+	WHERE 1=1
+	AND C.payment_installments = 1	--compra que se pagó de contado
+	AND C.payment_type NOT IN ('credit_card')
+	GROUP BY seller_id
+) AS subconsulta
+ORDER BY flujo_caja DESC
 ```
 
 #### Resultado
 
 ```bash
+/*----------------------------------+------------+-----------------+
+ | seller_id                        | flujo_caja | cantidad_ventas |
+ +----------------------------------+------------+-----------------+
+ | 53243585a1d6dc2643021fd1853d8905 | 44328.0    | 96              |
+ | 7c67e1448b00f6e969d365cea6b010ab | 43273.0    | 464             |
+ | 4a3ca9315b744ce9f8e9374361493884 | 39567.0    | 544             |
+ | 4869f7a5dfa277a7dca6462dcf3b52b2 | 38778.0    | 217             |
+ | da8622b14eb17ae2831f4ac5b9dab84a | 34128.0    | 452             |
+ +----------------------------------+------------+-----------------+*/
 ```
 
