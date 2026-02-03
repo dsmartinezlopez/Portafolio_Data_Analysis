@@ -467,6 +467,8 @@ AND ranking < 6
 
 #### 1. Identificar compras recurrentes en intervalos de tiempo de 30 días y mostrar las utilidades que dejaron los 5 mejores clientes. ¿Qué clientes fueron y de donde fueron? 
 
+Para este problema inicialmente se creó la siguiente vista que traía los datos que se necesitaban para responder a esta consulta: 
+
 ```bash
 CREATE VIEW utilidadesV5 AS
 SELECT
@@ -481,6 +483,8 @@ LEFT JOIN ['Orders items$'] B
 ON A.order_id = B.order_id
 GROUP BY A.customer_id, A.order_purchase_timestamp, A.order_status, B.order_id, B.product_id;
 ```
+
+Para realizar la medición de las compras recurrentes se relacionó para cada cliente el número de orders_id (sin discriminar cuántos productos habían por order_id ya que en el dataset todos los productos de cada order_id aparecen comprados en la misma fecha y hora), pero si se realizó un conteo de productos por orden con la función de ventana ROW_NUMBER(). Como lo que se pensaba era un conteo incremental para cada cliente que compró más de una order_id en un lapso de menos de 30 días se muestra el siguiente CTE recursivo:
 
 ```bash
 CREATE VIEW CTE_recursivo AS
@@ -521,7 +525,10 @@ SELECT * FROM cte_recursivo
 WHERE 1=1
 AND order_status NOT IN ('unavailable', 'canceled')
 ```
+> [!NOTE]
+> Para esta vista se filtraron aquellos niveles de compra que eran mayores a 1 (nivel_compra > 1) para identificar los clientes que compraron más de una vez en el intervalo de tiempo de 30 días. Sin embargo, el resultado fue nulo ya que en el dataset solo registra una order_id por cada customer_id. Pero en la práctica, esto no sucede, por lo que quería mostrar cómo se resolvería este tipo de preguntas. 
 
+Finalmente, para sintetizar las vistas anteriores y responder a la pregunta de negocio, se plantea la siguiente consulta:
 
 ```bash
 SELECT TOP 5 *
