@@ -57,6 +57,12 @@ Feel free to explore the projects below to see how I apply these tools to real-w
   **Conclusion:** The database allowed us to answer both operational and business questions, maintaining a necessary balance when analyzing data in e-commerce companies. Additionally, a dashboard was created that addressed these questions in the format typically used for management presentations.
 
 
+  
+
+
+####  - **Project 3:**  [Logistics Operations](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Product_Reviews.md)
+
+
 -------------------------------------------------------------------------------------------------------------------------------------
 
 ### Tableau:
