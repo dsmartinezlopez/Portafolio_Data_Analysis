@@ -60,7 +60,7 @@ Feel free to explore the projects below to see how I apply these tools to real-w
   
 
 
-####  - **Project 3:**  [Logistics Operations](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Logistics%20Operarions.md)
+####  - **Project 3:**  [Logistics Operations](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Logistics%20Operarions.md) + Power BI Dashboard
 
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/yogape/logistics-operations-database) database to obtain information
   
@@ -87,7 +87,7 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
 ### Power BI: 
 
-####  - **Project 1:**  [Dashboard Logistic](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Logistics%20Operarions.md)
+####  - **Project 1:**  [Dashboard Logistic]
 
   **Goal:**
   
