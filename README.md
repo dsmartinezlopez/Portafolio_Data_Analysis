@@ -87,7 +87,7 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
 ### Power BI: 
 
-####  - **Project 1:**  [Dashboard Logistic]
+####  - **Project 1:**  [Dashboard Logistic - En desarrollo]
 
   **Goal:**
   
