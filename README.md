@@ -86,7 +86,21 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 -------------------------------------------------------------------------------------------------------------------------------------
 
 ### Power BI: 
-####  - **Project 1:** [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
+
+####  - **Project 1:**  [Dashboard Logistic](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Logistics%20Operarions.md)
+
+  **Goal:**
+  
+  **Description:** 
+  
+  **Skills:** Data Visualization, Data Manipulation, Storytelling.
+  
+  **Technology:** `DAX`, `Power Query`, `Power Pivot`, `M`.
+
+  **Conclusion:** 
+
+
+####  - **Project 2:** [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
   
 > [!TIP]
 > (Download raw for use the original Dashboard version)
