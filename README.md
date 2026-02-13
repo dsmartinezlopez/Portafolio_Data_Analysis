@@ -142,7 +142,7 @@ Improve the quality of human capital, a fundamental pillar for the country's pro
 
   **Description:** For this project, given that the sample sizes of the population taking the Icfes Saber Pro tests differed for each of the hypotheses presented above, statistical analyses such as normality tests, homogeneity of variance tests, parameterization tests, and even tests tailored to the number of groups to be evaluated for each hypothesis were necessary. For the first hypothesis, the Kruskal-Wallis, Dunn's post-hoc, and Cliff's Delta tests were used. For the second hypothesis, the Welch-Satterthwaite t-test was used. Finally, for the third hypothesis, the Chi-square test was used.
   
-  **Skills:** Statistic Models, Data Cleaning, Data Manipulation, Data Visualization.
+  **Skills:** Statistic Models, A/B Testing, Data Cleaning, Data Manipulation, Data Visualization.
   
   **Technology:** `Pandas`, `Numpy`, `Matplotlib`, `Seaborn`, `Scikit-learn`.
   
