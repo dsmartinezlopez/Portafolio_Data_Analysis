@@ -67,6 +67,10 @@ Feel free to explore the projects below to see how I apply these tools to real-w
   **Description:** 
 
   **Schema:**
+
+
+
+  ![Schema](schema_project_3.png)
   
   **Skills:** 
   
