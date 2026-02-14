@@ -93,8 +93,6 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
 ####  - **Project 1:**  [Dashboard Logistic - En desarrollo]
 
-> [!TIP]
-> (Download raw for use the original Dashboard version)
 
   **Goal:**
   
@@ -107,10 +105,8 @@ Feel free to explore the projects below to see how I apply these tools to real-w
   **Conclusion:** 
 
 
-####  - **Project 2:** [Dashboard Icfes Saber Pro](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/Resultados%20Icfes%20SaberPro.pbix)
-  
-> [!TIP]
-> (Download raw for use the original Dashboard version)
+####  - **Project 2:** [Dashboard Icfes Saber Pro](https://app.powerbi.com/reportEmbed?reportId=04096993-7891-49ff-a53f-fd1347cb9463&autoAuth=true&ctid=9beae17e-8578-4f6a-8785-4a33c4bcbda5)
+ 
    
   **Goal:** Use Data Analysis for:
   
