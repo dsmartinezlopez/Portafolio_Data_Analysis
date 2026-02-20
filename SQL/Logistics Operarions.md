@@ -9,7 +9,7 @@ Código completo:
 
 ## Etapa de exploración - preguntas de negocio
 
-																									### On time delivery metrics
+### On time delivery metrics
 
 #### 1. Calcule la cantidad de viajes retrasados para cada DRIVER, además devuelva la tasa de retraso en % con 1 decimal. Considere únicamente los DRIVERS que hicieron +700 viajes y genere un ranking por la tasa de retraso y ordénelo de mayor a menor; aquellas tasas de retraso que sean iguales asigneles la misma posición y siga con la siguiente. Calcule además el total de revenue para cada driver.
 
@@ -78,7 +78,7 @@ ORDER BY tasa_retraso DESC
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 																									
-																										### Logistics network metrics
+### Logistics network metrics
 
 #### 1. Para cada tipo de facilities ¿cuales fueron el top 5 donde más pasaron los vehículos? Muestre en qué ciudad están ubicados y además calcule dentro de la misma query los subtotales de pedidos que pasaron por cada tipo de facility
 
