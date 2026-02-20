@@ -76,7 +76,8 @@ ORDER BY tasa_retraso DESC
 
 #### 5. La empresa ha decidido comisionar con 10% (sobre las utilidades) a los DRIVERS (con contrato activo y +5 años de experiencia) que generaron +2M de ingresos para la compañía. ¿Qienes son esos trabajadores y cuánto comisionaron?
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																									
 																										### Logistics network metrics
 
 #### 1. Para cada tipo de facilities ¿cuales fueron el top 5 donde más pasaron los vehículos? Muestre en qué ciudad están ubicados y además calcule dentro de la misma query los subtotales de pedidos que pasaron por cada tipo de facility
