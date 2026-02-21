@@ -64,7 +64,7 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
   **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/yogape/logistics-operations-database) database to obtain information
   
-  **Description:** 
+  **Description:** The dataset contains 85,000+ records across 14 interconnected tables covering everything from driver assignments and fuel purchases to maintenance schedules and delivery performance. Each table maintains proper foreign key relationships.
 
   **Schema:**
 
