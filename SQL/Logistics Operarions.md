@@ -85,12 +85,7 @@ ORDER BY tasa_retraso DESC
 #### 2. Cree una tabla con las rutas asignadas de ciudades desde origen a destino. Contemple todos los facilities de la red logística por los que pasaron los vehículos y compare la cantidad de viajes retrasados. Muestre el diseño de la red en un Dashboard. 
 
 
-#### 3. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos: 
-
-#### Costo de drivers.
-#### Costo de mantenimiento de vehículos.
-#### Costo de combustible.
-#### Costo de cargue de mercancías.
+#### 3. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos: 1. Costo de drivers. 2. Costo de mantenimiento de vehículos. 3. Costo de combustible. 4. Costo de cargue de mercancías.
 
 
 
