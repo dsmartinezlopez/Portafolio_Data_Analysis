@@ -92,6 +92,10 @@ ORDER BY tasa_retraso DESC
 																									
 ### Customers metrics
 
+#### 1. ¿Cual fue el top 5 de clientes con mayor revenue para la organización?
 
+#### 2. Clasifique los cargues de mercancía que se hicieron por su peso. Aquellas rutas destinadas a un mismo customer_id cuyo peso es <= 15000 lbs es considerado pequeño. Aquellas rutas destinadas a un mismo customer_id cuyo peso es > 15000 lbs y <= 30000 lbs es considerado un cargue medio y los que fueron > 30000 lbs son considerados cargues grandes. ¿Cuales fueron el top 3 de clientes por cada categoría que más viajes se les proveyeron?
+
+#### 3. Ordene de mayor a menor por revenue la cantidad de clientes que en el momento están inactivos o que ya no se les está brindando el servicio de logística. ¿Cuántos viajes se les hicieron a esos clientes en total y cuantos de esos no se lograron cumplir con los tiempos preestablecidos?
 
 
