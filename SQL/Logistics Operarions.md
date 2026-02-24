@@ -211,9 +211,83 @@ SET latitud_destination_city =
 	ELSE latitud_destination_city
 	END;
 ```
+Paso 4: Creación de vista para comparar entregas retrasadas en la red logística con coordenadas geográficas desde origen-destino
 
+```bash
+CREATE OR ALTER VIEW red AS	
+WITH conteo_total_viajes AS (
+    SELECT 
+        r.route_id,
+        r.origin_city,
+        r.latitud_origin_city,
+        r.longitud_origin_city,
+        r.destination_city,
+        r.latitud_destination_city,
+        r.longitud_destination_city,
+        COUNT(t.trip_id) AS Qty_trips
+    FROM routes$ r
+    LEFT JOIN loads$ l ON r.route_id = l.route_id
+    LEFT JOIN trips$ t ON l.load_id = t.load_id
+    GROUP BY 
+        r.route_id, r.origin_city, r.latitud_origin_city, r.longitud_origin_city,
+        r.destination_city, r.latitud_destination_city, r.longitud_destination_city
+),
+promedio_desempeño AS (
+    SELECT 
+        r.route_id,
+        AVG(TRY_CAST(m.on_time_delivery_rate AS numeric(10,4))) AS avg_delivery_rate
+    FROM routes$ r
+    LEFT JOIN loads$ l ON r.route_id = l.route_id
+    LEFT JOIN trips$ t ON l.load_id = t.load_id
+    INNER JOIN drivers$ d ON t.driver_id = d.driver_id
+    LEFT JOIN driver_monthly_metrics$ m ON d.driver_id = m.driver_id
+    GROUP BY r.route_id
+)
+SELECT 
+    c.route_id,
+    c.Qty_trips,
+    CAST(ISNULL(p.avg_delivery_rate, 0) * c.Qty_trips AS INT) AS on_time_Qty_trips,
+    c.Qty_trips - CAST(ISNULL(p.avg_delivery_rate, 0) * c.Qty_trips AS INT) AS late_arrival_Qty_trips,
+    c.origin_city,
+    c.latitud_origin_city,
+    c.longitud_origin_city,
+    c.destination_city,
+    c.latitud_destination_city,
+    c.longitud_destination_city
+FROM conteo_total_viajes c
+LEFT JOIN promedio_desempeño p ON c.route_id = p.route_id
+```
 
+Paso 5: Optimización de las tablas base
 
+```bash
+-- Para agilizar el JOIN de 'routes$' con 'loads$'
+CREATE INDEX IX_loads_route_id 
+ON loads$ (route_id) 
+INCLUDE (load_id);
+
+-- Para agilizar el JOIN de 'loads$' con 'trips$' y 'drivers$'
+CREATE INDEX IX_trips_load_driver 
+ON trips$ (load_id, driver_id) 
+INCLUDE (trip_id);
+
+-- Para agilizar el cálculo del promedio del (on_time_delivery_rate) para cada driver_id
+CREATE INDEX IX_driver_metrics_performance
+ON driver_monthly_metrics$ (driver_id)
+INCLUDE (on_time_delivery_rate);
+
+-- Índice de cobertura para la tabla 'routes$'
+CREATE INDEX IX_routes_performance 
+ON routes$ (route_id) 
+INCLUDE (
+    origin_city, 
+    latitud_origin_city, 
+    longitud_origin_city, 
+    destination_city, 
+    latitud_destination_city, 
+    longitud_destination_city
+);
+```
 
 
 #### 3. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos: 1. Costo de drivers. 2. Costo de mantenimiento de vehículos. 3. Costo de combustible. 4. Costo de cargue de mercancías.
