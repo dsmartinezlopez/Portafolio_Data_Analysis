@@ -82,7 +82,138 @@ ORDER BY tasa_retraso DESC
 
 #### 1. Para cada tipo de facilities ¿cuales fueron el top 5 donde más pasaron los vehículos? Muestre en qué ciudad están ubicados y además calcule dentro de la misma query los subtotales de pedidos que pasaron por cada tipo de facility
 
-#### 2. Cree una tabla con las rutas asignadas de ciudades desde origen a destino. Contemple todos los facilities de la red logística por los que pasaron los vehículos y compare la cantidad de viajes retrasados. Muestre el diseño de la red en un Dashboard. 
+#### 2. Cree una tabla con las rutas asignadas de ciudades desde origen a destino. Contemple todos los puntos origen-destino de la red logística por los que pasaron los vehículos y compare la cantidad de viajes retrasados en cada ruta. Muestre el diseño de la red en un mapa como un Dashboard. 
+
+Paso 1: Verificación esquema de la tabla de rutas
+
+```bash
+SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'routes$'
+```
+Paso 2: Agregación de columnas de latitud y longitud al esquema de la tabla de rutas
+
+```bash
+ALTER TABLE routes$
+ADD longitud_origin_city float,
+	latitud_origin_city float,
+	longitud_destination_city float,
+	latitud_destination_city float 
+```
+Paso 3: Inserción de valores geoespaciales a ciudades origen y destino
+
+```bash
+--- agregación longitudes de ciudades de origen 
+
+UPDATE routes$
+SET longitud_origin_city =
+	CASE
+		WHEN origin_city = 'Atlanta' THEN -84.38798
+		WHEN origin_city = 'Chicago' THEN -87.65005
+		WHEN origin_city = 'Dallas' THEN -96.80667
+		WHEN origin_city = 'New York' THEN -74.00597
+		WHEN origin_city = 'Phoenix' THEN -112.07404
+		WHEN origin_city = 'Philadelphia' THEN -75.16362
+		WHEN origin_city = 'Houston' THEN -95.36327
+		WHEN origin_city = 'Miami' THEN -80.19366
+		WHEN origin_city = 'Detroit' THEN -83.04575
+		WHEN origin_city = 'Seattle' THEN -122.33207
+		WHEN origin_city = 'Denver' THEN -104.9847
+		WHEN origin_city = 'Portland' THEN -122.67621
+		WHEN origin_city = 'Las Vegas' THEN -115.13722
+		WHEN origin_city = 'Minneapolis' THEN -93.26384
+		WHEN origin_city = 'Charlotte' THEN -80.84313
+		WHEN origin_city = 'Columbus' THEN -82.99879
+		WHEN origin_city = 'Memphis' THEN -90.04898
+		WHEN origin_city = 'Kansas City' THEN -94.57857
+	ELSE longitud_origin_city
+	END;
+
+--- agregación latitudes de ciudades de origen 
+
+UPDATE routes$
+SET latitud_origin_city =
+	CASE
+		WHEN origin_city = 'Atlanta' THEN 33.749
+		WHEN origin_city = 'Chicago' THEN 41.85003
+		WHEN origin_city = 'Dallas' THEN 32.78306
+		WHEN origin_city = 'New York' THEN 40.71427
+		WHEN origin_city = 'Phoenix' THEN 33.44838
+		WHEN origin_city = 'Philadelphia' THEN 39.95238
+		WHEN origin_city = 'Houston' THEN 29.76328
+		WHEN origin_city = 'Miami' THEN 25.77427
+		WHEN origin_city = 'Detroit' THEN 42.33143
+		WHEN origin_city = 'Seattle' THEN 47.60621
+		WHEN origin_city = 'Denver' THEN 39.73915
+		WHEN origin_city = 'Portland' THEN 45.52345
+		WHEN origin_city = 'Las Vegas' THEN 36.17497
+		WHEN origin_city = 'Minneapolis' THEN 44.97997
+		WHEN origin_city = 'Charlotte' THEN 35.22709
+		WHEN origin_city = 'Columbus' THEN 39.96118
+		WHEN origin_city = 'Memphis' THEN 35.14953
+		WHEN origin_city = 'Kansas City' THEN 39.09973
+	ELSE latitud_origin_city
+	END;
+
+
+--- agregación longitudes de ciudades de destino 
+
+UPDATE routes$
+SET longitud_destination_city =
+	CASE
+		WHEN destination_city = 'Atlanta' THEN -84.38798
+		WHEN destination_city = 'Chicago' THEN -87.65005
+		WHEN destination_city = 'Dallas' THEN -96.80667
+		WHEN destination_city = 'New York' THEN -74.00597
+		WHEN destination_city = 'Phoenix' THEN -112.07404
+		WHEN destination_city = 'Philadelphia' THEN -75.16362
+		WHEN destination_city = 'Houston' THEN -95.36327
+		WHEN destination_city = 'Miami' THEN -80.19366
+		WHEN destination_city = 'Detroit' THEN -83.04575
+		WHEN destination_city = 'Seattle' THEN -122.33207
+		WHEN destination_city = 'Denver' THEN -104.9847
+		WHEN destination_city = 'Portland' THEN -122.67621
+		WHEN destination_city = 'Las Vegas' THEN -115.13722
+		WHEN destination_city = 'Minneapolis' THEN -93.26384
+		WHEN destination_city = 'Charlotte' THEN -80.84313
+		WHEN destination_city = 'Columbus' THEN -82.99879
+		WHEN destination_city = 'Memphis' THEN -90.04898
+		WHEN destination_city = 'Kansas City' THEN -94.57857
+		WHEN destination_city = 'Los Angeles' THEN -118.24368
+		WHEN destination_city = 'Indianapolis' THEN -86.15804
+	ELSE longitud_destination_city
+	END;
+
+--- agregación latitudes de ciudades de destino 
+
+UPDATE routes$
+SET latitud_destination_city =
+	CASE
+		WHEN destination_city = 'Atlanta' THEN 33.749
+		WHEN destination_city = 'Chicago' THEN 41.85003
+		WHEN destination_city = 'Dallas' THEN 32.78306
+		WHEN destination_city = 'New York' THEN 40.71427
+		WHEN destination_city = 'Phoenix' THEN 33.44838
+		WHEN destination_city = 'Philadelphia' THEN 39.95238 
+		WHEN destination_city = 'Houston' THEN 29.76328
+		WHEN destination_city = 'Miami' THEN 25.77427
+		WHEN destination_city = 'Detroit' THEN 42.33143
+		WHEN destination_city = 'Seattle' THEN 47.60621
+		WHEN destination_city = 'Denver' THEN 39.73915
+		WHEN destination_city = 'Portland' THEN 45.52345
+		WHEN destination_city = 'Las Vegas' THEN 36.17497
+		WHEN destination_city = 'Minneapolis' THEN 44.97997
+		WHEN destination_city = 'Charlotte' THEN 35.22709
+		WHEN destination_city = 'Columbus' THEN 39.96118
+		WHEN destination_city = 'Memphis' THEN 35.14953
+		WHEN destination_city = 'Kansas City' THEN 39.09973
+		WHEN destination_city = 'Los Angeles' THEN 34.05223
+		WHEN destination_city = 'Indianapolis' THEN 39.76838
+	ELSE latitud_destination_city
+	END;
+```
+
+
+
 
 
 #### 3. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos: 1. Costo de drivers. 2. Costo de mantenimiento de vehículos. 3. Costo de combustible. 4. Costo de cargue de mercancías.
