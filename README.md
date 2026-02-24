@@ -62,7 +62,8 @@ Feel free to explore the projects below to see how I apply these tools to real-w
 
 ####  - **Project 3:** (In process...) [Logistics Operations](https://github.com/dsmartinezlopez/Portafolio_Data_Analysis/blob/Portafolio-projects-1/SQL/Logistics%20Operarions.md) + Power BI Dashboard
 
-  **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/yogape/logistics-operations-database) database to obtain information
+  **Goal:** Explore in detail a [Kaggle](https://www.kaggle.com/datasets/yogape/logistics-operations-database) database to identify bottlenecks in the logistics network, evaluating key performance indicators of the drivers, compliance and utilization of resources in the logistics network, cost optimization, revenue analysis and customer behavior.
+
   
   **Description:** The dataset contains 85,000+ records across 14 interconnected tables covering everything from driver assignments and fuel purchases to maintenance schedules and delivery performance. Each table maintains proper foreign key relationships.
 
