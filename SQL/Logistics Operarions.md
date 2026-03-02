@@ -67,6 +67,82 @@ ORDER BY tasa_retraso DESC
 
 #### 2. ¿Cuáles fueron las marcas de vehículos que más se utilizaron para la realizar los viajes? Muestre la cantidad de viajes realizados y la cantidad de viajes retrasados. Además muestre para cada marca la cantidad de vehículos que estuvieron más de una vez en mantenimiento en un rango de 1 semana y la cantidad de accidentes registrados.
 
+```bash
+WITH full_rate AS(
+	SELECT
+		driver_id,
+		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
+		SUM(TRY_CAST(trips_completed AS numeric)) - SUM(TRY_CAST(trips_completed AS numeric) * TRY_CAST(on_time_delivery_rate AS numeric)) AS viajes_retrasados
+	FROM driver_monthly_metrics$
+    GROUP BY driver_id
+),
+
+utilization_mark AS(
+	SELECT
+		tp.driver_id,
+		t.make AS marca,
+		COUNT(tp.trip_id) AS cantidad_viajes
+	FROM trucks$ t
+	INNER JOIN trips$ tp
+	ON t.truck_id = tp.truck_id
+	GROUP BY tp.driver_id, t.make
+),
+
+incumplimiento_por_mark AS(
+	SELECT
+		u.marca AS marca,
+		SUM(u.cantidad_viajes) AS cantidad_viajes,
+		SUM((u.cantidad_viajes/ NULLIF(f.cantidad_viajes, 0)) * f.viajes_retrasados) AS retrasos_proporcionales
+	FROM utilization_mark u
+	LEFT JOIN full_rate f
+	ON u.driver_id = f.driver_id
+	GROUP BY u.marca
+),
+accidentes_mantenimientos AS (
+	SELECT
+	    t.make AS marca,
+	    COUNT(s.incident_id) AS cantidad_accidentes,
+	    COUNT(DISTINCT reincidentes.truck_id) AS vehiculos_con_mantenimiento_semanal
+	FROM trucks$ t
+	LEFT JOIN safety_incidents$ s 
+	    ON t.truck_id = s.truck_id
+	LEFT JOIN (
+	    SELECT DISTINCT m1.truck_id
+	    FROM maintenance_records$ m1
+	    INNER JOIN maintenance_records$ m2 
+	        ON m1.truck_id = m2.truck_id 
+	        AND m1.maintenance_id <> m2.maintenance_id
+	    WHERE m2.maintenance_date BETWEEN m1.maintenance_date AND DATEADD(DAY, 7, m1.maintenance_date)
+	) AS reincidentes 
+	    ON t.truck_id = reincidentes.truck_id
+	GROUP BY t.make
+)
+SELECT
+	um.marca AS marca,
+	um.cantidad_viajes AS cantidad_viajes_completados,
+	CAST(ROUND(um.retrasos_proporcionales, 0) AS int) AS cantidad_viajes_retrasados,
+	cantidad_accidentes,
+	vehiculos_con_mantenimiento_semanal
+FROM incumplimiento_por_mark um
+INNER JOIN accidentes_mantenimientos am
+ON um.marca = am.marca
+ORDER BY cantidad_viajes_completados DESC
+```
+
+#### Resultado
+
+```bash
+/*-------------+-------------------------------+------------------------------+-----------------------+-------------------------------------+
+| marca        | cantidad_viajes_completados   | cantidad_viajes_retrasados   | cantidad_accidentes   | vehiculos_con_mantenimiento_semanal |
++--------------+-------------------------------+------------------------------+-----------------------+-------------------------------------+
+| Volvo        | 17218                         | 10800                        | 34                    | 20                                  |
+| International| 15450                         | 9728                         | 36                    | 18                                  |
+| Peterbilt    | 14699                         | 9227                         | 29                    | 21                                  |
+| Freightliner | 13660                         | 8593                         | 25                    | 21                                  |
+| Mack         | 12681                         | 7972                         | 27                    | 20                                  |
+| Kenworth     | 10030                         | 6313                         | 18                    | 14                                  |
++--------------+-------------------------------+------------------------------+-----------------------+-------------------------------------+*/
+```
 
 #### 3. ¿Cuales fueron los días de la semana donde más se registraron viajes retrasados? devuelva el resultado en formato de matriz con los días de la semana como columnas y las fechas de los despachos en formato "yyyy-mm" como filas.
 
