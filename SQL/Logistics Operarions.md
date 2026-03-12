@@ -11,21 +11,20 @@ Código completo:
 
 ### On time delivery metrics
 
-#### 1. Calcule la cantidad de viajes retrasados para cada DRIVER, además devuelva la tasa de retraso en % con 1 decimal. Considere únicamente los DRIVERS que hicieron +700 viajes y genere un ranking por la tasa de retraso y ordénelo de mayor a menor; aquellas tasas de retraso que sean iguales asigneles la misma posición y siga con la siguiente. Calcule además el total de revenue para cada driver.
+#### 1. Calcule la cantidad de viajes retrasados para cada DRIVER, además devuelva la tasa de retraso en % con 1 decimal. Considere únicamente los DRIVERS que hicieron +700 viajes y genere un ranking por la tasa de retraso y ordénelo de mayor a menor. Calcule además el total de revenue para cada driver.
 
 ```bash
 SELECT
 	driver_id,
 	cantidad_viajes,
-	NULLIF(CAST(ROUND((tasa_retraso*cantidad_viajes),0) AS int),0) AS cantidad_viajes_retrasados,
+	CAST(cantidad_viajes - ((1-tasa_retraso)*cantidad_viajes) AS int) AS cantidad_viajes_retrasados,
 	FORMAT(tasa_retraso, 'P1') AS tasa_retraso,
-	DENSE_RANK() OVER(ORDER BY tasa_retraso DESC) AS ranking_outliers,
 	total_revenue
 FROM (
 	SELECT 
 		driver_id,
 		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
-		AVG(TRY_CAST(on_time_delivery_rate AS numeric)) AS tasa_retraso,
+		AVG(TRY_CAST(on_time_delivery_rate AS float)) AS tasa_retraso,
 		FORMAT(SUM(TRY_CAST(total_revenue AS numeric)), 'C') AS total_revenue
 	FROM driver_monthly_metrics$
 	GROUP BY driver_id
@@ -36,33 +35,33 @@ ORDER BY tasa_retraso DESC
 #### Resultado
 
 ```bash
-/*----------+-----------------+----------------------------+--------------+-----------------+---------------+
-| driver_id | cantidad_viajes | cantidad_viajes_retrasados | tasa_retraso | ranking_outliers| total_revenue |
-+-----------+-----------------+----------------------------+--------------+-----------------+---------------+
-| DRV00108  | 735             | 408                        | 55.6%        | 1               | $2,311,329.00 |
-| DRV00147  | 705             | 313                        | 44.4%        | 2               | $2,256,066.00 |
-| DRV00139  | 710             | 316                        | 44.4%        | 2               | $2,152,412.00 |
-| DRV00085  | 703             | 293                        | 41.7%        | 3               | $2,229,522.00 |
-| DRV00019  | 749             | 312                        | 41.7%        | 3               | $2,275,651.00 |
-| DRV00024  | 708             | 295                        | 41.7%        | 3               | $2,166,574.00 |
-| DRV00149  | 721             | 280                        | 38.9%        | 4               | $2,269,105.00 |
-| DRV00078  | 717             | 259                        | 36.1%        | 5               | $2,167,291.00 |
-| DRV00124  | 702             | 234                        | 33.3%        | 6               | $2,084,929.00 |
-| DRV00130  | 701             | 234                        | 33.3%        | 6               | $2,118,376.00 |
-| DRV00038  | 705             | 235                        | 33.3%        | 6               | $2,160,496.00 |
-| DRV00016  | 712             | 237                        | 33.3%        | 6               | $2,278,576.00 |
-| DRV00127  | 702             | 234                        | 33.3%        | 6               | $2,272,321.00 |
-| DRV00051  | 723             | 241                        | 33.3%        | 6               | $2,311,845.00 |
-| DRV00059  | 729             | 223                        | 30.6%        | 7               | $2,305,055.00 |
-| DRV00142  | 711             | 217                        | 30.6%        | 7               | $2,143,054.00 |
-| DRV00099  | 711             | 217                        | 30.6%        | 7               | $2,158,400.00 |
-| DRV00092  | 711             | 197                        | 27.8%        | 8               | $2,173,931.00 |
-| DRV00014  | 707             | 196                        | 27.8%        | 8               | $2,174,425.00 |
-| DRV00066  | 737             | 205                        | 27.8%        | 8               | $2,180,636.00 |
-| DRV00150  | 706             | 196                        | 27.8%        | 8               | $2,075,242.00 |
-| DRV00010  | 709             | 197                        | 27.8%        | 8               | $2,144,656.00 |
-| DRV00087  | 725             | 161                        | 22.2%        | 9               | $2,214,001.00 |
-+-----------+-----------------+----------------------------+--------------+-----------------+---------------+*/
+/*----------+-----------------+----------------------------+--------------+-----------------+
+| driver_id | cantidad_viajes | cantidad_viajes_retrasados | tasa_retraso | total_revenue   |
++-----------+-----------------+----------------------------+--------------+-----------------+
+| DRV00108  | 735             | 350                        | 47.7%        | $2,311,329.00   |
+| DRV00139  | 710             | 330                        | 46.5%        | $2,152,412.00   |
+| DRV00099  | 711             | 328                        | 46.2%        | $2,158,400.00   |
+| DRV00059  | 729             | 335                        | 46.0%        | $2,305,055.00   |
+| DRV00085  | 703             | 319                        | 45.4%        | $2,229,522.00   |
+| DRV00149  | 721             | 326                        | 45.2%        | $2,269,105.00   |
+| DRV00130  | 701             | 315                        | 45.0%        | $2,118,376.00   |
+| DRV00016  | 712             | 320                        | 45.0%        | $2,278,576.00   |
+| DRV00019  | 749             | 336                        | 44.9%        | $2,275,651.00   |
+| DRV00024  | 708             | 317                        | 44.8%        | $2,166,574.00   |
+| DRV00147  | 705             | 315                        | 44.7%        | $2,256,066.00   |
+| DRV00142  | 711             | 318                        | 44.7%        | $2,143,054.00   |
+| DRV00038  | 705             | 313                        | 44.5%        | $2,160,496.00   |
+| DRV00078  | 717             | 318                        | 44.4%        | $2,167,291.00   |
+| DRV00066  | 737             | 327                        | 44.4%        | $2,180,636.00   |
+| DRV00010  | 709             | 310                        | 43.7%        | $2,144,656.00   |
+| DRV00051  | 723             | 313                        | 43.4%        | $2,311,845.00   |
+| DRV00014  | 707             | 306                        | 43.3%        | $2,174,425.00   |
+| DRV00150  | 706             | 303                        | 43.0%        | $2,075,242.00   |
+| DRV00124  | 702             | 296                        | 42.2%        | $2,084,929.00   |
+| DRV00092  | 711             | 299                        | 42.1%        | $2,173,931.00   |
+| DRV00127  | 702             | 295                        | 42.1%        | $2,272,321.00   |
+| DRV00087  | 725             | 303                        | 41.9%        | $2,214,001.00   |
++-----------+-----------------+----------------------------+--------------+-----------------+*/
 ```
 
 #### 2. ¿Cuáles fueron las marcas de vehículos que más se utilizaron para la realizar los viajes? Muestre la cantidad de viajes realizados y la cantidad de viajes retrasados. Además muestre para cada marca la cantidad de vehículos que estuvieron más de una vez en mantenimiento en un rango de 1 semana y la cantidad de accidentes registrados.
@@ -146,12 +145,124 @@ ORDER BY cantidad_viajes_completados DESC
 
 #### 3. ¿Cuales fueron los días de la semana donde más se registraron viajes retrasados? devuelva el resultado en formato de matriz con los días de la semana como columnas y las fechas de los despachos en formato "yyyy-mm" como filas.
 
+Primeramente le indicamos al motor de SQL Server cúal sería el día a considerar como primer día de la semana, en este caso, le indicamos que el primer día de la semana es el día Domingo a trevés de:
+
+```bash
+SET DATEFIRST 7;
+```
+
+Procediendo a dar respuesta a la pregunta de negocio:
+
+```bash
+WITH viajes AS(
+	SELECT
+		tr.dispatch_date,
+		FORMAT(tr.dispatch_date, 'yyyy-MM') AS Año_Mes,
+		rpd.cantidad_viajes_retrasados AS viajes_retrasados
+	FROM rendimiento_por_driver rpd
+	JOIN trips$ tr
+	ON rpd.driver_id = tr.driver_id
+
+	GROUP BY tr.dispatch_date, rpd.cantidad_viajes_retrasados
+)
+SELECT 
+	Año_Mes,
+	[Lunes], 
+	[Martes], 
+	[Miércoles], 
+	[Jueves], 
+	[Viernes], 
+	[Sábado], 
+	[Domingo]
+FROM (
+    SELECT 
+		Año_Mes,
+        CASE DATEPART(WEEKDAY, dispatch_date)
+            WHEN 1 THEN 'Domingo'
+            WHEN 2 THEN 'Lunes'
+            WHEN 3 THEN 'Martes'
+            WHEN 4 THEN 'Miércoles'
+            WHEN 5 THEN 'Jueves'
+            WHEN 6 THEN 'Viernes'
+            WHEN 7 THEN 'Sábado'
+        END AS día,
+        viajes_retrasados AS viajes
+	FROM viajes 
+
+) AS subquery
+PIVOT
+(
+    COUNT(viajes)
+    FOR día IN ([Lunes], [Martes], [Miércoles], [Jueves], [Viernes], [Sábado], [Domingo])
+) AS pvt
+ORDER BY Año_Mes ASC
+```
+
+#### Resultado
+
+```bash
+/*---------+-------+-------+-----------+--------+---------+--------+---------+
+ | Año_Mes | Lunes | Martes| Miércoles | Jueves | Viernes | Sábado | Domingo |
+ +---------+-------+-------+-----------+--------+---------+--------+---------+
+ | 2022-01 | 200   | 144   | 151       | 154    | 157     | 184    | 192     |
+ | 2022-02 | 163   | 143   | 150       | 158    | 150     | 155    | 159     |
+ | 2022-03 | 150   | 205   | 197       | 205    | 157     | 153    | 146     |
+ | 2022-04 | 153   | 154   | 168       | 152    | 191     | 190    | 150     |
+ | 2022-05 | 191   | 197   | 161       | 163    | 155     | 141    | 180     |
+ | 2022-06 | 161   | 159   | 187       | 188    | 163     | 151    | 159     |
+ | 2022-07 | 165   | 140   | 150       | 141    | 190     | 190    | 195     |
+ | 2022-08 | 203   | 187   | 181       | 154    | 166     | 151    | 156     |
+ | 2022-09 | 152   | 147   | 145       | 193    | 185     | 150    | 149     |
+ | 2022-10 | 183   | 151   | 154       | 149    | 140     | 193    | 196     |
+ | 2022-11 | 155   | 189   | 205       | 149    | 151     | 145    | 158     |
+ | 2022-12 | 143   | 149   | 155       | 191    | 192     | 192    | 162     |
+ | 2023-01 | 191   | 200   | 146       | 153    | 151     | 155    | 181     |
+ | 2023-02 | 158   | 151   | 149       | 160    | 150     | 146    | 156     |
+ | 2023-03 | 155   | 150   | 182       | 187    | 195     | 160    | 140     |
+ | 2023-04 | 156   | 165   | 148       | 145    | 154     | 197    | 187     |
+ | 2023-05 | 182   | 186   | 168       | 156    | 152     | 158    | 148     |
+ | 2023-06 | 154   | 151   | 165       | 184    | 183     | 141    | 153     |
+ | 2023-07 | 198   | 150   | 147       | 165    | 140     | 193    | 182     |
+ | 2023-08 | 156   | 182   | 179       | 186    | 163     | 151    | 159     |
+ | 2023-09 | 140   | 157   | 144       | 149    | 200     | 186    | 154     |
+ | 2023-10 | 188   | 179   | 155       | 158    | 145     | 147    | 188     |
+ | 2023-11 | 158   | 152   | 193       | 188    | 158     | 157    | 151     |
+ | 2023-12 | 144   | 149   | 146       | 149    | 190     | 184    | 180     |
+ | 2024-01 | 192   | 202   | 191       | 157    | 147     | 156    | 142     |
+ | 2024-02 | 156   | 164   | 144       | 186    | 153     | 142    | 144     |
+ | 2024-03 | 158   | 147   | 145       | 157    | 170     | 204    | 189     |
+ | 2024-04 | 191   | 198   | 156       | 152    | 160     | 151    | 168     |
+ | 2024-05 | 149   | 155   | 197       | 199    | 186     | 145    | 152     |
+ | 2024-06 | 155   | 152   | 155       | 161    | 153     | 199    | 191     |
+ | 2024-07 | 182   | 185   | 182       | 157    | 158     | 147    | 155     |
+ | 2024-08 | 152   | 150   | 156       | 197    | 191     | 196    | 149     |
+ | 2024-09 | 195   | 165   | 153       | 151    | 157     | 147    | 174     |
+ | 2024-10 | 163   | 195   | 193       | 190    | 166     | 135    | 160     |
+ | 2024-11 | 145   | 152   | 157       | 155    | 187     | 196    | 150     |
+ | 2024-12 | 185   | 192   | 158       | 161    | 147     | 152    | 175     |
+ +---------+-------+-------+-----------+--------+---------+--------+---------+*/
+```
 
 #### 4. ¿Cual fue el tiempo promedio (en minutos) de eventos de detención reportados en los viajes para cada ciudad? Muestre el TOP 10 de ciudades con mayores tiempos y compare cuántos de esos eventos de detención terminaron afectando la tasa de cumplimiento.
+
+```bash
+```
+
+#### Resultado
+
+```bash
+```
 
 
 #### 5. La empresa ha decidido comisionar con 10% (sobre las utilidades) a los DRIVERS (con contrato activo y +5 años de experiencia) que generaron +2M de ingresos para la compañía. ¿Qienes son esos trabajadores y cuánto comisionaron?
 
+```bash
+```
+
+#### Resultado
+
+```bash
+```
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 																									
 ### Logistics network metrics
