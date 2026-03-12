@@ -1,0 +1,407 @@
+
+USE Logistics
+GO
+
+--PREGUNTAS DE NEGOCIO
+----------------------------------------------
+
+--On time delivery metrics
+
+--1. Calcule la cantidad de viajes retrasados para cada DRIVER, además devuelva la tasa de retraso en % con 1 decimal. Considere únicamente los DRIVERS que 
+--   hicieron +700 viajes y genere un ranking por la tasa de retraso y ordénelo de mayor a menor. Calcule además el total de revenue para cada driver.
+
+SELECT
+	driver_id,
+	cantidad_viajes,
+	CAST(cantidad_viajes - ((1-tasa_retraso)*cantidad_viajes) AS int) AS cantidad_viajes_retrasados,
+	FORMAT(tasa_retraso, 'P1') AS tasa_retraso,
+	total_revenue
+FROM (
+	SELECT 
+		driver_id,
+		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
+		AVG(TRY_CAST(on_time_delivery_rate AS float)) AS tasa_retraso,
+		FORMAT(SUM(TRY_CAST(total_revenue AS numeric)), 'C') AS total_revenue
+	FROM driver_monthly_metrics$
+	GROUP BY driver_id
+	HAVING SUM(TRY_CAST(trips_completed AS numeric)) > 700
+) AS sub
+ORDER BY tasa_retraso DESC
+
+
+
+--2. ¿Cuáles fueron las marcas de vehículos que más se utilizaron para la realizar los viajes? Muestre la cantidad de viajes realizados y la cantidad de viajes retrasados. 
+--   Además muestre para cada marca la cantidad de vehículos que estuvieron más de una vez en mantenimiento en un rango de 1 semana y la cantidad de accidentes registrados.
+
+WITH full_rate AS(
+	SELECT
+		driver_id,
+		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
+		SUM(TRY_CAST(trips_completed AS numeric)) - SUM(TRY_CAST(trips_completed AS numeric) * TRY_CAST(on_time_delivery_rate AS numeric)) AS viajes_retrasados
+	FROM driver_monthly_metrics$
+    GROUP BY driver_id
+),
+
+utilization_mark AS(
+	SELECT
+		tp.driver_id,
+		t.make AS marca,
+		COUNT(tp.trip_id) AS cantidad_viajes
+	FROM trucks$ t
+	INNER JOIN trips$ tp
+	ON t.truck_id = tp.truck_id
+	GROUP BY tp.driver_id, t.make
+),
+
+incumplimiento_por_mark AS(
+	SELECT
+		u.marca AS marca,
+		SUM(u.cantidad_viajes) AS cantidad_viajes,
+		SUM((u.cantidad_viajes / NULLIF(f.cantidad_viajes, 0)) * f.viajes_retrasados) AS retrasos_proporcionales
+	FROM utilization_mark u
+	LEFT JOIN full_rate f
+	ON u.driver_id = f.driver_id
+	GROUP BY u.marca
+),
+accidentes_mantenimientos AS (
+	SELECT
+	    t.make AS marca,
+	    COUNT(s.incident_id) AS cantidad_accidentes,
+	    COUNT(DISTINCT reincidentes.truck_id) AS vehiculos_con_mantenimiento_semanal
+	FROM trucks$ t
+	LEFT JOIN safety_incidents$ s 
+	    ON t.truck_id = s.truck_id
+	LEFT JOIN (
+	    SELECT DISTINCT m1.truck_id
+	    FROM maintenance_records$ m1
+	    INNER JOIN maintenance_records$ m2 
+	        ON m1.truck_id = m2.truck_id 
+	        AND m1.maintenance_id <> m2.maintenance_id
+	    WHERE m2.maintenance_date BETWEEN m1.maintenance_date AND DATEADD(DAY, 7, m1.maintenance_date)
+	) AS reincidentes 
+	    ON t.truck_id = reincidentes.truck_id
+	GROUP BY t.make
+)
+SELECT
+	um.marca AS marca,
+	um.cantidad_viajes AS cantidad_viajes_completados,
+	CAST(ROUND(um.retrasos_proporcionales, 0) AS int) AS cantidad_viajes_retrasados,
+	cantidad_accidentes,
+	vehiculos_con_mantenimiento_semanal
+FROM incumplimiento_por_mark um
+INNER JOIN accidentes_mantenimientos am
+ON um.marca = am.marca
+ORDER BY cantidad_viajes_completados DESC
+
+
+--3. ¿Cuales fueron los días de la semana donde más se registraron viajes retrasados? devuelva el resultado en formato de matriz con los días de la semana como columnas y las fechas de los despachos en formato "yyyy-mm" como filas
+
+-- Creamos una vista del ejercicio anterior para reutilizar la consulta
+
+CREATE VIEW rendimiento_por_driver AS
+SELECT
+	driver_id,
+	cantidad_viajes,
+	CAST(cantidad_viajes - ((1-tasa_retraso)*cantidad_viajes) AS int) AS cantidad_viajes_retrasados,
+	FORMAT(tasa_retraso, 'P1') AS tasa_retraso
+FROM (
+	SELECT 
+		driver_id,
+		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
+		AVG(TRY_CAST(on_time_delivery_rate AS float)) AS tasa_retraso
+	FROM driver_monthly_metrics$
+	GROUP BY driver_id
+) AS sub
+
+-- Asignamos el domingo como el primer día de la semana
+SET DATEFIRST 7;
+
+-- Matriz de viajes retrasados por día de la semana
+WITH viajes AS(
+	SELECT
+		tr.dispatch_date,
+		FORMAT(tr.dispatch_date, 'yyyy-MM') AS Año_Mes,
+		rpd.cantidad_viajes_retrasados AS viajes_retrasados
+	FROM rendimiento_por_driver rpd
+	JOIN trips$ tr
+	ON rpd.driver_id = tr.driver_id
+
+	GROUP BY tr.dispatch_date, rpd.cantidad_viajes_retrasados
+)
+SELECT 
+	Año_Mes,
+	[Lunes], 
+	[Martes], 
+	[Miércoles], 
+	[Jueves], 
+	[Viernes], 
+	[Sábado], 
+	[Domingo]
+FROM (
+    SELECT 
+		Año_Mes,
+        CASE DATEPART(WEEKDAY, dispatch_date)
+            WHEN 1 THEN 'Domingo'
+            WHEN 2 THEN 'Lunes'
+            WHEN 3 THEN 'Martes'
+            WHEN 4 THEN 'Miércoles'
+            WHEN 5 THEN 'Jueves'
+            WHEN 6 THEN 'Viernes'
+            WHEN 7 THEN 'Sábado'
+        END AS día,
+        viajes_retrasados AS viajes
+	FROM viajes 
+
+) AS subquery
+PIVOT
+(
+    COUNT(viajes)
+    FOR día IN ([Lunes], [Martes], [Miércoles], [Jueves], [Viernes], [Sábado], [Domingo])
+) AS pvt
+ORDER BY Año_Mes ASC
+
+
+
+--4. ¿Cual fue el tiempo promedio (en minutos) de eventos de detención reportados en los viajes para cada ciudad? Muestre el TOP 10 de ciudades con mayores tiempos y compare cuántos de esos eventos de detención terminaron afectando la tasa de cumplimiento.
+
+
+--5. La empresa ha decidido comisionar con 10% (sobre las utilidades) a los DRIVERS (con contrato activo y +5 años de experiencia) que generaron +2M de ingresos para la compañía. ¿Qienes son esos trabajadores y cuánto comisionaron?
+
+----------------------------------------------------------------------------------------
+
+
+--Logistics network metrics:
+
+-- 6. Para cada tipo de facilities ¿cuales fueron el top 5 donde más pasaron los vehículos? Muestre en qué ciudad están ubicados y además calcule dentro de la misma query los subtotales de pedidos que pasaron por cada tipo de facility
+
+
+-- 7. Cree una tabla con las rutas asignadas de ciudades desde origen a destino. Contemple todos los puntos origen-destino de la red logística por los que pasaron los vehículos y compare la cantidad de viajes retrasados en cada ruta. 
+--	  Muestre el diseño de la red en un mapa como un Dashboard. 
+
+--- verificación esquema de la tabla de rutas
+
+SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'routes$'
+
+--- agregación de columnas de latitud y longitud al esquema de la tabla de rutas
+
+ALTER TABLE routes$
+ADD longitud_origin_city float,
+	latitud_origin_city float,
+	longitud_destination_city float,
+	latitud_destination_city float 
+
+
+--- agregación longitudes de ciudades de origen 
+
+UPDATE routes$
+SET longitud_origin_city =
+	CASE
+		WHEN origin_city = 'Atlanta' THEN -84.38798
+		WHEN origin_city = 'Chicago' THEN -87.65005
+		WHEN origin_city = 'Dallas' THEN -96.80667
+		WHEN origin_city = 'New York' THEN -74.00597
+		WHEN origin_city = 'Phoenix' THEN -112.07404
+		WHEN origin_city = 'Philadelphia' THEN -75.16362
+		WHEN origin_city = 'Houston' THEN -95.36327
+		WHEN origin_city = 'Miami' THEN -80.19366
+		WHEN origin_city = 'Detroit' THEN -83.04575
+		WHEN origin_city = 'Seattle' THEN -122.33207
+		WHEN origin_city = 'Denver' THEN -104.9847
+		WHEN origin_city = 'Portland' THEN -122.67621
+		WHEN origin_city = 'Las Vegas' THEN -115.13722
+		WHEN origin_city = 'Minneapolis' THEN -93.26384
+		WHEN origin_city = 'Charlotte' THEN -80.84313
+		WHEN origin_city = 'Columbus' THEN -82.99879
+		WHEN origin_city = 'Memphis' THEN -90.04898
+		WHEN origin_city = 'Kansas City' THEN -94.57857
+	ELSE longitud_origin_city
+	END;
+
+--- agregación latitudes de ciudades de origen 
+
+UPDATE routes$
+SET latitud_origin_city =
+	CASE
+		WHEN origin_city = 'Atlanta' THEN 33.749
+		WHEN origin_city = 'Chicago' THEN 41.85003
+		WHEN origin_city = 'Dallas' THEN 32.78306
+		WHEN origin_city = 'New York' THEN 40.71427
+		WHEN origin_city = 'Phoenix' THEN 33.44838
+		WHEN origin_city = 'Philadelphia' THEN 39.95238
+		WHEN origin_city = 'Houston' THEN 29.76328
+		WHEN origin_city = 'Miami' THEN 25.77427
+		WHEN origin_city = 'Detroit' THEN 42.33143
+		WHEN origin_city = 'Seattle' THEN 47.60621
+		WHEN origin_city = 'Denver' THEN 39.73915
+		WHEN origin_city = 'Portland' THEN 45.52345
+		WHEN origin_city = 'Las Vegas' THEN 36.17497
+		WHEN origin_city = 'Minneapolis' THEN 44.97997
+		WHEN origin_city = 'Charlotte' THEN 35.22709
+		WHEN origin_city = 'Columbus' THEN 39.96118
+		WHEN origin_city = 'Memphis' THEN 35.14953
+		WHEN origin_city = 'Kansas City' THEN 39.09973
+	ELSE latitud_origin_city
+	END;
+
+
+--- agregación longitudes de ciudades de destino 
+
+UPDATE routes$
+SET longitud_destination_city =
+	CASE
+		WHEN destination_city = 'Atlanta' THEN -84.38798
+		WHEN destination_city = 'Chicago' THEN -87.65005
+		WHEN destination_city = 'Dallas' THEN -96.80667
+		WHEN destination_city = 'New York' THEN -74.00597
+		WHEN destination_city = 'Phoenix' THEN -112.07404
+		WHEN destination_city = 'Philadelphia' THEN -75.16362
+		WHEN destination_city = 'Houston' THEN -95.36327
+		WHEN destination_city = 'Miami' THEN -80.19366
+		WHEN destination_city = 'Detroit' THEN -83.04575
+		WHEN destination_city = 'Seattle' THEN -122.33207
+		WHEN destination_city = 'Denver' THEN -104.9847
+		WHEN destination_city = 'Portland' THEN -122.67621
+		WHEN destination_city = 'Las Vegas' THEN -115.13722
+		WHEN destination_city = 'Minneapolis' THEN -93.26384
+		WHEN destination_city = 'Charlotte' THEN -80.84313
+		WHEN destination_city = 'Columbus' THEN -82.99879
+		WHEN destination_city = 'Memphis' THEN -90.04898
+		WHEN destination_city = 'Kansas City' THEN -94.57857
+		WHEN destination_city = 'Los Angeles' THEN -118.24368
+		WHEN destination_city = 'Indianapolis' THEN -86.15804
+	ELSE longitud_destination_city
+	END;
+
+--- agregación latitudes de ciudades de destino 
+
+UPDATE routes$
+SET latitud_destination_city =
+	CASE
+		WHEN destination_city = 'Atlanta' THEN 33.749
+		WHEN destination_city = 'Chicago' THEN 41.85003
+		WHEN destination_city = 'Dallas' THEN 32.78306
+		WHEN destination_city = 'New York' THEN 40.71427
+		WHEN destination_city = 'Phoenix' THEN 33.44838
+		WHEN destination_city = 'Philadelphia' THEN 39.95238 
+		WHEN destination_city = 'Houston' THEN 29.76328
+		WHEN destination_city = 'Miami' THEN 25.77427
+		WHEN destination_city = 'Detroit' THEN 42.33143
+		WHEN destination_city = 'Seattle' THEN 47.60621
+		WHEN destination_city = 'Denver' THEN 39.73915
+		WHEN destination_city = 'Portland' THEN 45.52345
+		WHEN destination_city = 'Las Vegas' THEN 36.17497
+		WHEN destination_city = 'Minneapolis' THEN 44.97997
+		WHEN destination_city = 'Charlotte' THEN 35.22709
+		WHEN destination_city = 'Columbus' THEN 39.96118
+		WHEN destination_city = 'Memphis' THEN 35.14953
+		WHEN destination_city = 'Kansas City' THEN 39.09973
+		WHEN destination_city = 'Los Angeles' THEN 34.05223
+		WHEN destination_city = 'Indianapolis' THEN 39.76838
+	ELSE latitud_destination_city
+	END;
+
+
+
+ -- creación de vista para comparar entregas retrasadas en la red logística con coordenadas geográficas desde origen-destino
+
+ -- Paso 1: Relacionar el id de la ruta con la cantidad de viajes realizados.
+ -- Paso 2: Calcular las métricas de desempeño por driver
+ -- Paso 3: Enlazar los viajes con el origen y destino
+
+
+
+CREATE OR ALTER VIEW red AS	
+WITH conteo_total_viajes AS (
+    SELECT 
+        r.route_id,
+        r.origin_city,
+        r.latitud_origin_city,
+        r.longitud_origin_city,
+        r.destination_city,
+        r.latitud_destination_city,
+        r.longitud_destination_city,
+        COUNT(t.trip_id) AS Qty_trips
+    FROM routes$ r
+    LEFT JOIN loads$ l ON r.route_id = l.route_id
+    LEFT JOIN trips$ t ON l.load_id = t.load_id
+    GROUP BY 
+        r.route_id, r.origin_city, r.latitud_origin_city, r.longitud_origin_city,
+        r.destination_city, r.latitud_destination_city, r.longitud_destination_city
+),
+promedio_desempeño AS (
+    SELECT 
+        r.route_id,
+        AVG(TRY_CAST(m.on_time_delivery_rate AS numeric(10,4))) AS avg_delivery_rate
+    FROM routes$ r
+    LEFT JOIN loads$ l ON r.route_id = l.route_id
+    LEFT JOIN trips$ t ON l.load_id = t.load_id
+    INNER JOIN drivers$ d ON t.driver_id = d.driver_id
+    LEFT JOIN driver_monthly_metrics$ m ON d.driver_id = m.driver_id
+    GROUP BY r.route_id
+)
+SELECT 
+    c.route_id,
+    c.Qty_trips,
+    CAST(ISNULL(p.avg_delivery_rate, 0) * c.Qty_trips AS INT) AS on_time_Qty_trips,
+    c.Qty_trips - CAST(ISNULL(p.avg_delivery_rate, 0) * c.Qty_trips AS INT) AS late_arrival_Qty_trips,
+    c.origin_city,
+    c.latitud_origin_city,
+    c.longitud_origin_city,
+    c.destination_city,
+    c.latitud_destination_city,
+    c.longitud_destination_city
+FROM conteo_total_viajes c
+LEFT JOIN promedio_desempeño p ON c.route_id = p.route_id
+
+
+-- Para agilizar el JOIN de 'routes$' con 'loads$'
+CREATE INDEX IX_loads_route_id 
+ON loads$ (route_id) 
+INCLUDE (load_id);
+
+-- Para agilizar el JOIN de 'loads$' con 'trips$' y 'drivers$'
+CREATE INDEX IX_trips_load_driver 
+ON trips$ (load_id, driver_id) 
+INCLUDE (trip_id);
+
+-- Para agilizar el cálculo del promedio del (on_time_delivery_rate) para cada driver_id
+CREATE INDEX IX_driver_metrics_performance
+ON driver_monthly_metrics$ (driver_id)
+INCLUDE (on_time_delivery_rate);
+
+-- Índice de cobertura para la tabla 'routes$'
+CREATE INDEX IX_routes_performance 
+ON routes$ (route_id) 
+INCLUDE (
+    origin_city, 
+    latitud_origin_city, 
+    longitud_origin_city, 
+    destination_city, 
+    latitud_destination_city, 
+    longitud_destination_city
+);
+-----------------------------------------
+
+-- 8. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos:
+-- Costo de drivers.
+-- Costo de mantenimiento de vehículos.
+-- Costo de combustible.
+-- Costo de cargue de mercancías.
+
+
+----------------------------------------------------------------------------------------
+
+
+--Customers metrics: 
+
+
+--1. ¿Cual fue el top 5 de clientes con mayor revenue para la organización?
+
+--2. Clasifique los cargues de mercancía que se hicieron por su peso. Aquellas rutas destinadas a un mismo customer_id cuyo peso es <= 15000 lbs es considerado pequeño. 
+--	 Aquellas rutas destinadas a un mismo customer_id cuyo peso es > 15000 lbs y <= 30000 lbs es considerado un cargue medio y los que fueron > 30000 lbs son considerados cargues grandes. 
+--   ¿Cuales fueron el top 3 de clientes por cada categoría que más viajes se les proveyeron?
+
+--3. Ordene de mayor a menor por revenue la cantidad de clientes que en el momento están inactivos o que ya no se les está brindando el servicio de logística.
+--	 ¿Cuántos viajes se les hicieron a esos clientes en total y cuantos de esos no se lograron cumplir con los tiempos preestablecidos?
+
