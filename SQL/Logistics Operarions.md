@@ -64,6 +64,25 @@ ORDER BY tasa_retraso DESC
 +-----------+-----------------+----------------------------+--------------+-----------------+*/
 ```
 
+Creamos una vista para reuilizar la consulta para evaluar métricas de incumplimiento por driver ya que la base de datos solo trae métricas de cumplimiento. 
+
+```bash
+CREATE VIEW rendimiento_por_driver AS
+SELECT
+	driver_id,
+	cantidad_viajes,
+	CAST(cantidad_viajes - ((1-tasa_retraso)*cantidad_viajes) AS int) AS cantidad_viajes_retrasados,
+	FORMAT(tasa_retraso, 'P1') AS tasa_retraso
+FROM (
+	SELECT 
+		driver_id,
+		SUM(TRY_CAST(trips_completed AS numeric)) AS cantidad_viajes,
+		AVG(TRY_CAST(on_time_delivery_rate AS float)) AS tasa_retraso
+	FROM driver_monthly_metrics$
+	GROUP BY driver_id
+) AS sub
+```
+
 #### 2. ¿Cuáles fueron las marcas de vehículos que más se utilizaron para la realizar los viajes? Muestre la cantidad de viajes realizados y la cantidad de viajes retrasados. Además muestre para cada marca la cantidad de vehículos que estuvieron más de una vez en mantenimiento en un rango de 1 semana y la cantidad de accidentes registrados.
 
 ```bash
