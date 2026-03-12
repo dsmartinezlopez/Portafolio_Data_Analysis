@@ -269,6 +269,14 @@ ORDER BY Año_Mes ASC
 
 #### 1. Para cada tipo de facilities ¿cuales fueron el top 5 donde más pasaron los vehículos? Muestre en qué ciudad están ubicados y además calcule dentro de la misma query los subtotales de pedidos que pasaron por cada tipo de facility
 
+```bash
+```
+
+#### Resultado
+
+```bash
+```
+
 #### 2. Cree una tabla con las rutas asignadas de ciudades desde origen a destino. Contemple todos los puntos origen-destino de la red logística por los que pasaron los vehículos y compare la cantidad de viajes retrasados en cada ruta. Muestre el diseño de la red en un mapa como un Dashboard. 
 
 Paso 1: Verificación esquema de la tabla de rutas
@@ -480,6 +488,14 @@ Paso 6: [Logistic Operations Map](https://public.tableau.com/app/profile/david.s
 
 
 #### 3. ¿Cuáles fueron los costos ruteados por cantidad de piezas transportadas? Tenga en cuenta la siguiente distribución de los costos: 1. Costo de drivers. 2. Costo de mantenimiento de vehículos. 3. Costo de combustible. 4. Costo de cargue de mercancías.
+
+```bash
+```
+
+#### Resultado
+
+```bash
+```
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
