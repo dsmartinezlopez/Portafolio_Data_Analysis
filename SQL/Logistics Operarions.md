@@ -145,7 +145,7 @@ ORDER BY cantidad_viajes_completados DESC
 
 #### 3. ¿Cuales fueron los días de la semana donde más se registraron viajes retrasados? devuelva el resultado en formato de matriz con los días de la semana como columnas y las fechas de los despachos en formato "yyyy-mm" como filas.
 
-Primeramente le indicamos al motor de SQL Server cúal sería el día a considerar como primer día de la semana, en este caso, le indicamos que el primer día de la semana es el día Domingo a trevés de:
+Primeramente le indicamos al motor de SQL Server cúal sería el día a considerar como primer día de la semana, en este caso, le indicamos que el primer día de la semana es el día Domingo a través de:
 
 ```bash
 SET DATEFIRST 7;
